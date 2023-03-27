@@ -1,25 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+import React from "react";
+// import axios from "axios";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.css";
+import Customer from "./pages/Main";
+import ManagerMain from "./pages/ManagerMain";
+import ParkingLot from "./pages/ParkingLot";
+import Login from "./pages/Login";
+
+
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Customer />} />
+          <Route path="/Login" element={<Login />} />
+          <Route path="/Manager" element={<ManagerMain />} />
+          <Route path="/ParkingLot" element={<ParkingLot />} />
+            {/* all routes inside this wrapper are protected by login */}
+        </Routes>
+      </BrowserRouter>
   );
 }
 
