@@ -32,46 +32,46 @@ export default function Customer() {
           <thead className="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="px-6 py-7">Name</th>
-              <th scope="col" className="px-6 py-7">Free Spots</th>
               <th scope="col" className="px-6 py-7">Location</th>
+              <th scope="col" className="px-6 py-7">Rate</th>
               <th scope="col" className="px-6 py-7 w-44">Occupancy</th>
             </tr>
           </thead>
           <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+            <td className="px-4 py-4">Lorem Ipsum</td>
             <td className="px-2 py-4">Lorem Ipsum</td>
             <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4"><div className="flex">Lorem Ipsum <Link className="pl-12" to="/"><SlArrowRight/></Link></div></td>
+            <td className="px-2 py-4"><div className="flex">Lorem Ipsum <Link className="pl-12" to="/ParkingLot"><SlArrowRight/></Link></div></td>
           </tr>
           <tr className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+            <td className="px-4 py-4">Lorem Ipsum</td>
             <td className="px-2 py-4">Lorem Ipsum</td>
             <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4"><div className="flex">Lorem Ipsum <Link className="pl-12" to="/"><SlArrowRight/></Link></div></td>
+            <td className="px-2 py-4"><div className="flex">Lorem Ipsum <Link className="pl-12" to="/ParkingLot"><SlArrowRight/></Link></div></td>
           </tr>
           <tr className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+            <td className="px-4 py-4">Lorem Ipsum</td>
             <td className="px-2 py-4">Lorem Ipsum</td>
             <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4"><div className="flex">Lorem Ipsum <Link className="pl-12" to="/"><SlArrowRight/></Link></div></td>
+            <td className="px-2 py-4"><div className="flex">Lorem Ipsum <Link className="pl-12" to="/ParkingLot"><SlArrowRight/></Link></div></td>
           </tr>
           <tr className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+            <td className="px-4 py-4">Lorem Ipsum</td>
             <td className="px-2 py-4">Lorem Ipsum</td>
             <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4"><div className="flex">Lorem Ipsum <Link className="pl-12" to="/"><SlArrowRight/></Link></div></td>
+            <td className="px-2 py-4"><div className="flex">Lorem Ipsum <Link className="pl-12" to="/ParkingLot"><SlArrowRight/></Link></div></td>
           </tr>
           <tr className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+            <td className="px-4 py-4">Lorem Ipsum</td>
             <td className="px-2 py-4">Lorem Ipsum</td>
             <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4"><div className="flex">Lorem Ipsum <Link className="pl-12" to="/"><SlArrowRight/></Link></div></td>
+            <td className="px-2 py-4"><div className="flex">Lorem Ipsum <Link className="pl-12" to="/ParkingLot"><SlArrowRight/></Link></div></td>
           </tr>
           <tr className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+            <td className="px-4 py-4">Lorem Ipsum</td>
             <td className="px-2 py-4">Lorem Ipsum</td>
             <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4"><div className="flex">Lorem Ipsum <Link className="pl-12" to="/"><SlArrowRight/></Link></div></td>
+            <td className="px-2 py-4"><div className="flex">Lorem Ipsum <Link className="pl-12" to="/ParkingLot"><SlArrowRight/></Link></div></td>
           </tr>
         </table>
       </div>

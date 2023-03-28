@@ -22,3 +22,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@layer utilities{
+  .square {
+    aspect-ratio: 1/1;
+  }
+
+}

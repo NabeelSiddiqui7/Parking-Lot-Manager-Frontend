@@ -23,7 +23,6 @@ module.exports = {
         selectBg: "white",
         selectBorder: "#e3edfc",
         selectBorderActive: "#6b96db",
-        blue: "#2563EB",
         red: "#EF4444",
         lightGreyText: "#4a4a4a",
         blueGray300: "#90a4ae",
