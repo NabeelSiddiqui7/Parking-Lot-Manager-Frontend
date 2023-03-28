@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import bgImg from "../images/BgMain.svg";
 import { SearchBar } from "../components/SearchBar";
 import { HeaderMain } from "../components/HeaderMain";
-import {SlArrowRight} from "react-icons/sl"
+import {AiOutlinePlusCircle} from "react-icons/ai"
 
 export default function ManagerMain() {
 
@@ -92,7 +92,11 @@ export default function ManagerMain() {
             <td className="px-2 py-4">Lorem Ipsum</td>
           </tr>
         </table>
-        <button className="mt-3 w-full text-white bg-blue-400 py-1">Add Lot +</button>
+        <button className="mt-3 w-full text-white bg-blue-400 py-1">
+          <div className="flex justify-center items-center">
+            Add Lot
+            <AiOutlinePlusCircle size={"1.25rem"} className="m-2"/>
+          </div></button>
       </div>
       </div>
     </div>
