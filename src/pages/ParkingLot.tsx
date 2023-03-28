@@ -16,7 +16,7 @@ export default function ParkingLot() {
       <HeaderMain />
 
       <div className="flex justify-center text-4xl md:text-5xl font-bold text-[#EFEFEF] mt-10 md:mt-16 mb-4">
-            Parking Lot
+            Parking Lot X
       </div>
 
       <div className="backdrop-blur-main h-full flex flex-col">
