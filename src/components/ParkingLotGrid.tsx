@@ -4,18 +4,18 @@ import TicketModal from "./createTicketModal";
 export function ParkingLotGrid() {
     return (
        <div className="text-white p-4 grid gap-4 sm:grid-cols-3 max-w-md mx-auto">
-            <TicketModal/>
-            <TicketModal/>
-            <TicketModal/>
-            <TicketModal/>
-            <TicketModal/>
-            <TicketModal/>
-            <TicketModal/>
-            <TicketModal/>
-            <TicketModal/>    
-            <TicketModal/>
-            <TicketModal/>
-            <TicketModal/>     
+            <TicketModal status={"Open"}/>
+            <TicketModal status={"Open"}/>
+            <TicketModal status={"Active"}/>
+            <TicketModal status={"Open"}/>
+            <TicketModal status={"Taken"}/>
+            <TicketModal status={"Open"}/>
+            <TicketModal status={"Taken"}/>
+            <TicketModal status={"Open"}/>
+            <TicketModal status={"Taken"}/>    
+            <TicketModal status={"Open"}/>
+            <TicketModal status={"Open"}/>
+            <TicketModal status={"Open"}/>     
        </div>
     )
 }

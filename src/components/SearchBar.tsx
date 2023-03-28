@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { MdSearch } from "react-icons/md";
 // import axios from "axios";
 
-export function SearchBar() {
+export function SearchBar(props: any) {
   const [queryResults, setQueryResults] = useState<any>(null);
   const [cursor, setCursor] = useState<number>(-1);
   const [cursorLinkPath, setCursorLinkPath] = useState<string>("");
@@ -19,7 +19,7 @@ export function SearchBar() {
             setQueryResults(null);
           }}
           onClick={() => setCursor(-1)}
-          placeholder="Find Lots"
+          placeholder={props.placeholder}
           className="w-full px-3 py-3 rounded-lg border-blueGray300 bg-transparent outline-none focus:outline-none"
         />
       </div>

@@ -31,7 +31,7 @@ export default function ManagerMain() {
 
       <div className="backdrop-blur-main h-full">
         <div className="p-10 flex justify-center">
-          <SearchBar />
+          <SearchBar placeholder="Find Lot" />
           <div className="flex flex-row items-center">
             <p className="mx-5 text-white">Filter:</p>
             <Select className="text-base text-black"/>
