@@ -16,15 +16,28 @@ const style = {
   p: 4,
 };
 
-export default function TicketModal() {
+export default function TicketModal(props:any) {
   const [open, setOpen] = React.useState(false);
+  const [colour, setColour] = React.useState("bg-gray-50");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  React.useEffect(()=>{
+    if(props.status == "Open"){
+        setColour("bg-gray-50");
+    }
+    else if (props.status == "Active"){
+        setColour("bg-blue-400");
+    }
+    else{
+        setColour("bg-gray-400");
+    }
+  })
 
   return (
     <>
       <button onClick={handleOpen}>
-        <div className="h-16 bg-gray-50 sm:h-24 sm:square"></div>
+        <div className={`h-16 ${colour} sm:h-24 sm:square`}></div>
       </button>
       <Modal
         open={open}

@@ -58,13 +58,18 @@ export function HeaderMain() {
             </Link>
             <div className="ml-12 flex flex-row items-center space-x-16">
                 <Link
-                    className={`text-3xl lg:pl-6 flex flex-row items-center ${styles.navButton}`}
+                    className={`text-2xl lg:pl-1 flex flex-row items-center ${styles.navButton}`}
                     to="/">
                     Lots
                 </Link>
                 <Link
-                    className={`text-3xl lg:pl-6 flex flex-row items-center ${styles.navButton}`}
+                    className={`text-2xl lg:pl-1 flex flex-row items-center ${styles.navButton}`}
                     to="/Manager">
+                    Manage Lots
+                </Link>
+                <Link
+                    className={`text-2xl lg:pl-1 flex flex-row items-center ${styles.navButton}`}
+                    to="/ManagerList">
                     Managers
                 </Link>
             </div>
