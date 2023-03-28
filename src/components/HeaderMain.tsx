@@ -64,7 +64,7 @@ export function HeaderMain() {
                 </Link>
                 <Link
                     className={`text-3xl lg:pl-6 flex flex-row items-center ${styles.navButton}`}
-                    to="/">
+                    to="/Manager">
                     Managers
                 </Link>
             </div>
