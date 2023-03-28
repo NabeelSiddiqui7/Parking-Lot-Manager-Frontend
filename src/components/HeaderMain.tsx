@@ -47,16 +47,16 @@ export function HeaderMain() {
   return (
     <div className="flex flex-col">
       <header
-        className={`${styles.navbarContainer} flex relative z-10 w-full h-20 p-10`}
+        className={`${styles.navbarContainer} flex  justify-between relative z-10 h-20`}
       >
-        <div className="w-full text-white flex pl-5 flex-row">
-          <div className="w-full flex flex-row items-center justify-between">
+        <div className="text-white flex p-5 flex-row">
+          <div className="flex flex-row items-center justify-start">
             <Link
               className={`text-3xl font-semibold lg:pl-6 flex flex-row items-center ${styles.navButton}`}
               to="/">
               Parking Lot Manager
             </Link>
-            <div className="flex flex-row items-center space-x-16">
+            <div className="ml-12 flex flex-row items-center space-x-16">
                 <Link
                     className={`text-3xl lg:pl-6 flex flex-row items-center ${styles.navButton}`}
                     to="/">
@@ -68,26 +68,22 @@ export function HeaderMain() {
                     Managers
                 </Link>
             </div>
-            
-            {!isDesktop ? (
-              <button onClick={handleClick}>
-                {/* {!menuOpen ? (
-                  <MdMenu
-                    size="1.5em"
-                    color="#EFEFEF"
-                    style={{ marginRight: "1.25em" }}
-                  />
-                ) : (
-                  <MdClose
-                    size="1.5em"
-                    color="#EFEFEF"
-                    style={{ marginRight: "1.25em" }}
-                  />
-                )} */}
-              </button>
-            ) : (
-              <></>
-            )}
+          </div>
+        </div>
+        <div className="text-white flex p-5 flex-row">
+          <div className="flex flex-row items-center justify-start">
+            <div className="ml-12 flex flex-row items-center space-x-16">
+                <Link
+                    className={`text-3xl lg:pl-6 flex flex-row items-center ${styles.navButton}`}
+                    to="/">
+                    Login
+                </Link>
+                <Link
+                    className={`text-3xl lg:pl-6 flex flex-row items-center ${styles.navButton}`}
+                    to="/">
+                    Sign Up
+                </Link>
+            </div>
           </div>
         </div>
       </header>
@@ -157,12 +153,12 @@ export function HeaderMain() {
               Industries
             </Link>
           </Accordion> */}
-          <Link className={`${styles.darkMobileMenuItem} pl-5`} to="/data">
+          {/* <Link className={`${styles.darkMobileMenuItem} pl-5`} to="/data">
             Data
           </Link>
           <Link className={`${styles.darkMobileMenuItem} pl-5`} to="/about">
             About
-          </Link>
+          </Link> */}
         </div>
       ) : (
         <></>
