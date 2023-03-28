@@ -10,7 +10,7 @@ export default function Customer() {
 
 
   return (
-    <div className="h-screen w-screen" style={{ backgroundImage: `url(${bgImg})` }}>
+    <div className="h-screen w-100vw" style={{ backgroundImage: `url(${bgImg})` }}>
 
       <HeaderMain />
 
