@@ -25,11 +25,10 @@ export default function ManagerMain() {
           </div>
       </div>
 
-      <div className="flex justify-center text-4xl md:text-5xl font-bold text-[#EFEFEF] mt-10 md:mt-16 mb-4">
-            Your Lots
-      </div>
-
       <div className="backdrop-blur-main h-full">
+        <div className="flex justify-center text-4xl md:text-5xl font-bold text-[#EFEFEF] mt-10 md:mt-16">
+              Your Lots
+        </div>
         <div className="p-10 flex justify-center">
           <SearchBar placeholder="Find Lot" />
           <div className="flex flex-row items-center">
@@ -96,7 +95,8 @@ export default function ManagerMain() {
           <div className="flex justify-center items-center">
             Add Lot
             <AiOutlinePlusCircle size={"1.25rem"} className="m-2"/>
-          </div></button>
+          </div>
+        </button>
       </div>
       </div>
     </div>

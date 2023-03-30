@@ -32,8 +32,8 @@ export default function ManagerListMain() {
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" className="px-6 py-7 w-1/3">Name</th>
-              <th scope="col" className="px-6 py-7">Lots</th>
+              <th scope="col" className="px-4 py-7 w-1/3">Name</th>
+              <th scope="col" className="px-2 py-7">Lots</th>
             </tr>
           </thead>
           <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
