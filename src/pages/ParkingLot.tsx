@@ -5,10 +5,11 @@ import bgImg from "../images/BgMain.svg";
 import { SearchBar } from "../components/SearchBar";
 import { HeaderMain } from "../components/HeaderMain";
 import { ParkingLotGrid } from "../components/ParkingLotGrid";
+import { useParams } from 'react-router-dom'
 import {SlArrowRight} from "react-icons/sl"
 
 export default function ParkingLot() {
-
+  const { id } = useParams()
 
   return (
     <div className="h-screen w-100vw" style={{ backgroundImage: `url(${bgImg})` }}>
