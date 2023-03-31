@@ -20,7 +20,9 @@ function App() {
           <Route path="/Login" element={<Login />} />
           <Route path="/Manager" element={<ManagerMain />} />
           <Route path="/ManagerList" element={<ManagerListMain />} />
-          <Route path="/ParkingLot" element={<ParkingLot />} />
+          <Route path="/ParkingLot" element={<ParkingLot />}>
+            <Route path="/ParkingLot/:id"/>
+          </Route>
             {/* all routes inside this wrapper are protected by login */}
         </Routes>
       </BrowserRouter>
