@@ -80,7 +80,7 @@ export function HeaderMain() {
             <div className="ml-12 flex flex-row items-center space-x-16">
                 <Link
                     className={`text-3xl lg:pl-6 flex flex-row items-center ${styles.navButton}`}
-                    to="/">
+                    to="/Login">
                     Login
                 </Link>
                 <Link
