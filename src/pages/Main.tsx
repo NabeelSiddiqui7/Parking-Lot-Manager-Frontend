@@ -11,15 +11,17 @@ export default function Customer() {
   const [results, setResults] = useState<any[]>(["empty"]);
 
   const sortItems = [
-    { display: "Alphabet, Asc.", field: "name", order: "asc" },
-    { display: "Alphabet, Desc.", field: "name", order: "desc" },
+    { display: "Name, Asc.", field: "name", order: "asc" },
+    { display: "Name, Desc.", field: "name", order: "desc" },
+    { display: "Location, Asc.", field: "location", order: "asc" },
+    { display: "Location, Desc.", field: "name", order: "desc" },
   ];
 
   const [sort, setSort] = useState<any>(sortItems[0]);
 
 
   const getResult = async () => {
-    let url = `http://localhost:5000/user/lots?sortField=${sort.order}`;
+    let url = `http://localhost:5000/user/lots?sortField=${sort.field}&order=${sort.order}`;
     const res = await axios.get(url);
     const data = res.data;
     setResults(data);
@@ -46,7 +48,7 @@ export default function Customer() {
           </div>
 
           <div className="p-10 flex justify-center">
-            <p className="mx-5 text-white">Name:</p>
+            <p className="mx-5 text-white">Sort:</p>
             <Select 
               className="text-base text-black"
               onChange={(e) => {
