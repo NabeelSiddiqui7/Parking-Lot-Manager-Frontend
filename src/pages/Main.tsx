@@ -10,8 +10,16 @@ import axios from "axios";
 export default function Customer() {
   const [results, setResults] = useState<any[]>(["empty"]);
 
+  const sortItems = [
+    { display: "Alphabet, Asc.", field: "name", order: "asc" },
+    { display: "Alphabet, Desc.", field: "name", order: "desc" },
+  ];
+
+  const [sort, setSort] = useState<any>(sortItems[0]);
+
+
   const getResult = async () => {
-    let url = `http://localhost:5000/user/lots`;
+    let url = `http://localhost:5000/user/lots?sortField=${sort.order}`;
     const res = await axios.get(url);
     const data = res.data;
     setResults(data);
@@ -19,7 +27,7 @@ export default function Customer() {
 
   useEffect(() => {
     getResult();
-   },[])
+   },[sort])
 
   if (results[0] !== "empty") {
     console.log(results);
@@ -35,11 +43,29 @@ export default function Customer() {
         <div className="backdrop-blur-main h-full">
           <div className="p-10 flex justify-center">
             <SearchBar placeholder="Find Lot" />
-            <div className="flex flex-row items-center">
-              <p className="mx-5 text-white">Filter:</p>
-              <Select className="text-base text-black"/>
-            </div>
           </div>
+
+          <div className="p-10 flex justify-center">
+            <p className="mx-5 text-white">Name:</p>
+            <Select 
+              className="text-base text-black"
+              onChange={(e) => {
+                if (e) {
+                  setSort(e.value);
+                }
+              }}
+              defaultValue={{
+                value: sortItems[0],
+                label: sortItems[0].display,
+              }}
+              options={sortItems.map((item) => {
+                return { value: item, label: item.display };
+              })}
+              isSearchable={false}
+            />
+          </div>
+          
+          
   
           <div className="m-auto w-2/3 relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
