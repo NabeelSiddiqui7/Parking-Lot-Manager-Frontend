@@ -18,6 +18,8 @@ export default function Customer() {
   ];
 
   const [sort, setSort] = useState<any>(sortItems[0]);
+  const [filter, setFilter] = useState<number>(0);
+
 
 
   const getResult = async () => {
@@ -30,6 +32,16 @@ export default function Customer() {
   useEffect(() => {
     getResult();
    },[sort])
+
+   useEffect(() => {
+    if (filter === 5) {
+      setResults(results.filter((item) => item.rate < 5.0));
+    } else if (filter === 10) {
+      setResults(results.filter((item) => item.rate < 10.0));
+    } else if (filter === 20) {
+      setResults(results.filter((item) => item.rate < 20.0));
+    }
+  }, [filter, results]);
 
   if (results[0] !== "empty") {
     console.log(results);
@@ -65,6 +77,27 @@ export default function Customer() {
               })}
               isSearchable={false}
             />
+            <p className="mx-5 text-white">Filter:</p>
+            <Select
+              className="text-base text-black"
+              onChange={(e) => {
+                if (e) {
+                  setFilter(e.value);
+                } else {
+                  setFilter(0);
+                }
+              }}
+              defaultValue={{
+                value: 0,
+                label: "Select",
+                }}
+                options={[
+                { value: 5, label: "Rating less than 5" },
+                { value: 10, label: "Rating less than 10" },
+                { value: 20, label: "Rating less than 20" },
+                ]}
+                isSearchable={false}
+              />
           </div>
           
           
