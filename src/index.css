@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.nav-background {
+  background-image: linear-gradient(360deg, #161720 62.65%, rgba(0, 0, 0, 0.38) 152.26%);
+}
+
+/* .main-background {} */
+
+body {
+  background-color: black;
+  margin: 0;
+  font-family: 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+@layer utilities{
+  .square {
+    aspect-ratio: 1/1;
+  }
+
+}

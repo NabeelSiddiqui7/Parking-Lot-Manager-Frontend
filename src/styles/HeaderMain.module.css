@@ -1,0 +1,83 @@
+.navbarContainer {
+    background-color: #212128;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.40);
+    justify-content: space-between;
+  }
+  
+  .darkMenu {
+    background-color: #2B2C35;
+    border-radius: 10px;
+  }
+  
+  .darkMenuItem {
+    background-color: #2B2C35;
+    color: #EFEFEF;
+  }
+  
+  .darkMenuItem:hover {
+    background-color: #393B4E;
+    color: white;
+  }
+  
+  .darkMobileMenuItem {
+    display: flex;
+    background-color: #212128;
+    color: #EFEFEF;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-top: #2B2C35;
+    border-top-width: 1px;
+    border-style: solid;
+  }
+  
+  .darkMobileMenuItem:hover {
+    background-color: #393B4E;
+    color: white;
+  }
+  
+  .mobileMenu {
+    width: 100vw;
+    font-size: 20px;
+    padding-bottom: 10px;
+    position: absolute;
+    z-index: 11;
+    top: 5rem;
+    left: 0rem;
+    background-color: #212128;
+    border-radius: 0px 0px 10px 10px;
+  }
+  
+  /* Underline header links when hovered (hover animation) */
+  .navButton {
+    color: #EFEFEF;
+    transition: ease-in 0.2s;
+  }
+  
+  .navButton:hover {
+    color: white;
+    transition: ease-in 0.2s;
+  }
+  
+  .signup {
+    @apply text-xl font-semibold py-2 px-8 border border-[#EFEFEF] rounded shadow;
+    color: #EFEFEF;
+    transition: ease-in 0.2s;
+  }
+  
+  .signup:hover {
+    @apply text-xl font-semibold py-2 px-8 border border-[#EFEFEF] rounded shadow;
+    color: white;
+    transition: ease-in 0.2s;
+  }
+  
+  .logout {
+    @apply text-xl font-semibold py-2 px-8 border border-gray-400 rounded shadow;
+    color: rgb(199, 207, 223);
+    transition: ease-in 0.2s;
+    margin-right: 30px;
+  }
+  
+  .logout:hover {
+    @apply text-xl font-semibold py-2 px-8 border border-gray-100 rounded shadow;
+    color: white;
+  }
