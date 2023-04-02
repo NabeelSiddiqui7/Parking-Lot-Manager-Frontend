@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import { Link } from "react-router-dom";
-import bgImg from "../images/BgMain.svg";
+import bgImg from "../images/BgMain1.svg";
 import { SearchBar } from "../components/SearchBar";
 import { HeaderMain } from "../components/HeaderMain";
 import {AiOutlinePlusCircle} from "react-icons/ai"
@@ -13,20 +13,19 @@ export default function ManagerMain() {
     <div className="h-screen w-100vw" style={{ backgroundImage: `url(${bgImg})` }}>
 
       <HeaderMain />
-      
-      <div className="flex flex-col items-center">
-          <div className="text-3xl lg:text-5xl text-center text-[#EFEFEF] mt-32">
-            General Information
-          </div>
-          <div className="text-xl text-center text-[#EFEFEF] mt-6 px-4 flex flex-col items-center justify-center flex-wrap">
-            <p>Total Revenue: </p>
-            <p>Total Occupancy: </p>
-            <p>Average Rate: </p>
-          </div>
-      </div>
 
       <div className="backdrop-blur-main h-full">
-        <div className="flex justify-center text-4xl md:text-5xl font-bold text-[#EFEFEF] mt-10 md:mt-16">
+        <div className="flex flex-col items-center">
+            <div className="text-3xl lg:text-5xl text-center text-[#EFEFEF] mt-16">
+              General Information
+            </div>
+            <div className="text-xl text-center text-[#EFEFEF] pt-6 px-4 flex flex-col items-center justify-center flex-wrap">
+              <p>Total Revenue: </p>
+              <p>Total Occupancy: </p>
+              <p>Average Rate: </p>
+            </div>
+        </div>
+        <div className="flex justify-center text-4xl md:text-5xl font-bold text-[#EFEFEF] pt-6 md:pt-12">
               Your Lots
         </div>
         <div className="p-10 flex justify-center">

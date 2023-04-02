@@ -23,7 +23,7 @@ export function ParkingLotGrid(props: any) {
     console.log(props);
     return (
        <>
-        <div className={`text-white p-4 grid gap-5 sm:grid-cols-${String(width)} mx-auto`}>
+        <div className={`text-white p-4 grid gap-5 sm:grid-cols-${4} mx-auto`}>
             {indents}
                 {/* <TicketModal status={"Open"}/>
                 <TicketModal status={"Open"}/>
