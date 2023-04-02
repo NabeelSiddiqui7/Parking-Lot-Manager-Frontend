@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 
 export function ParkingLotGrid(props: any) {
-    const [width, setWidth] = useState(0);
+    const [width, setWidth] = useState(1);
     var indents = [];
     var key = 0;
     for (var i = 0; i < props.length; i++) {
@@ -23,7 +23,7 @@ export function ParkingLotGrid(props: any) {
     console.log(props);
     return (
        <>
-        <div className={`text-white p-4 grid gap-5 sm:grid-cols-${width} mx-auto`}>
+        <div className={`text-white p-4 grid gap-5 sm:grid-cols-${String(width)} mx-auto`}>
             {indents}
                 {/* <TicketModal status={"Open"}/>
                 <TicketModal status={"Open"}/>
