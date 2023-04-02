@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 // import axios from "axios";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
@@ -8,12 +8,14 @@ import ManagerMain from "./pages/ManagerMain";
 import ManagerListMain from "./pages/ManagerListMain";
 import ParkingLot from "./pages/ParkingLot";
 import Login from "./pages/Login";
-
-
-
+import {AuthProvider} from "./helper/AuthContext";
 
 function App() {
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
+    <AuthProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Customer />} />
@@ -26,6 +28,7 @@ function App() {
             {/* all routes inside this wrapper are protected by login */}
         </Routes>
       </BrowserRouter>
+    </AuthProvider>
   );
 }
 

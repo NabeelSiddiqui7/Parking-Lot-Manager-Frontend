@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 // import "@szhsin/react-menu/dist/index.css";
 // import "@szhsin/react-menu/dist/transitions/slide.css";
 import styles from "../styles/HeaderMain.module.css";
+import AuthContext from "../helper/AuthContext";
 
 export function HeaderMain() {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isDesktop, setDesktop] = useState(window.innerWidth > 1024);
+  const { setIsLoggedIn } = useContext(AuthContext);                      //Used to set the login status to logged out if it's clicked
+  const { isLoggedIn } = useContext(AuthContext);                         //Variable to determine if user is logged in
 
   useEffect(() => {
     window.addEventListener("resize", updateMedia);
@@ -31,6 +34,11 @@ export function HeaderMain() {
 
   const handleClick = () => {
     setMenuOpen(!menuOpen);
+  };
+
+  //Method to log the user out when clicked
+  const handleLogout = () => {
+    setIsLoggedIn(false);
   };
 
   const controlNavbar = () => {
@@ -78,16 +86,22 @@ export function HeaderMain() {
         <div className="text-white flex p-5 flex-row">
           <div className="flex flex-row items-center justify-start">
             <div className="ml-12 flex flex-row items-center space-x-16">
+              {isLoggedIn ? (
+                <form onSubmit={handleLogout}>
+                  <button 
+                      type="submit" 
+                      className={`text-3xl lg:pl-6 flex flex-row items-center ${styles.navButton}`}
+                    >
+                      Logout
+                    </button>
+                </form>
+              ) : (
                 <Link
-                    className={`text-3xl lg:pl-6 flex flex-row items-center ${styles.navButton}`}
-                    to="/Login">
-                    Login
+                  className={`text-3xl lg:pl-6 flex flex-row items-center ${styles.navButton}`}
+                  to="/Login">
+                  Login
                 </Link>
-                <Link
-                    className={`text-3xl lg:pl-6 flex flex-row items-center ${styles.navButton}`}
-                    to="/">
-                    Sign Up
-                </Link>
+              )}
             </div>
           </div>
         </div>

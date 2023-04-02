@@ -8,6 +8,7 @@
     border-radius: 10px;
     border-color: #202020;
     border-width: 1px;
+    justify-content: space-around;
   }
   
   .loginButton {
