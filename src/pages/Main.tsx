@@ -8,7 +8,9 @@ import {SlArrowRight} from "react-icons/sl"
 import axios from "axios";
 
 export default function Customer() {
+  const [originalData, setOriginalData] = useState<any[]>([]);
   const [results, setResults] = useState<any[]>(["empty"]);
+  
 
   const sortItems = [
     { display: "Name, Asc.", field: "name", order: "asc" },
@@ -17,8 +19,8 @@ export default function Customer() {
     { display: "Location, Desc.", field: "name", order: "desc" },
   ];
 
-  const [sort, setSort] = useState<any>(sortItems[0]);
   const [filter, setFilter] = useState<number>(0);
+  const [sort, setSort] = useState<any>(sortItems[0]);
 
 
 
@@ -26,22 +28,28 @@ export default function Customer() {
     let url = `http://localhost:5000/user/lots?sortField=${sort.field}&order=${sort.order}`;
     const res = await axios.get(url);
     const data = res.data;
+    setOriginalData(data);
     setResults(data);
   }
+
+
+   useEffect(() => {
+    if (filter === 5) {
+      setResults(originalData.filter((item) => item.rate < 5.0));
+    } else if (filter === 10) {
+      setResults(originalData.filter((item) => item.rate < 10.0));
+    } else if (filter === 20) {
+      setResults(originalData.filter((item) => item.rate < 20.0));
+    } else if (filter === 20) {
+      setResults(originalData.filter((item) => item.rate < 10000000.0));
+    } else {
+      setResults(originalData);
+    }
+  }, [filter, originalData]);
 
   useEffect(() => {
     getResult();
    },[sort])
-
-   useEffect(() => {
-    if (filter === 5) {
-      setResults(results.filter((item) => item.rate < 5.0));
-    } else if (filter === 10) {
-      setResults(results.filter((item) => item.rate < 10.0));
-    } else if (filter === 20) {
-      setResults(results.filter((item) => item.rate < 20.0));
-    }
-  }, [filter, results]);
 
   if (results[0] !== "empty") {
     console.log(results);
@@ -77,7 +85,7 @@ export default function Customer() {
               })}
               isSearchable={false}
             />
-            <p className="mx-5 text-white">Filter:</p>
+            <p className="mx-5 text-white">Rate:</p>
             <Select
               className="text-base text-black"
               onChange={(e) => {
@@ -92,9 +100,10 @@ export default function Customer() {
                 label: "Select",
                 }}
                 options={[
-                { value: 5, label: "Rating less than 5" },
-                { value: 10, label: "Rating less than 10" },
-                { value: 20, label: "Rating less than 20" },
+                {value: 10000000, label: "Any"},  
+                { value: 5, label: "Rate less than $5" },
+                { value: 10, label: "Rate less than $10" },
+                { value: 20, label: "Rate less than $20" },
                 ]}
                 isSearchable={false}
               />
