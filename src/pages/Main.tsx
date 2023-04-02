@@ -16,7 +16,7 @@ export default function Customer() {
     { display: "Name, Asc.", field: "name", order: "asc" },
     { display: "Name, Desc.", field: "name", order: "desc" },
     { display: "Location, Asc.", field: "location", order: "asc" },
-    { display: "Location, Desc.", field: "name", order: "desc" },
+    { display: "Location, Desc.", field: "location", order: "desc" },
   ];
 
   const [filter, setFilter] = useState<number>(0);
