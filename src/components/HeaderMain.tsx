@@ -39,6 +39,7 @@ export function HeaderMain() {
   //Method to log the user out when clicked
   const handleLogout = () => {
     setIsLoggedIn({isLoggedIn: false, userName: ''});
+    window.location.href = "/";
   };
 
   const controlNavbar = () => {
@@ -59,17 +60,21 @@ export function HeaderMain() {
       >
         <div className="text-white flex p-5 flex-row">
           <div className="flex flex-row items-center justify-start">
+          {isLoggedIn ? (
             <Link
               className={`text-3xl font-semibold lg:pl-6 flex flex-row items-center ${styles.navButton}`}
-              to="/">
+              to="/Manager">
               Parking Lot Manager
             </Link>
+          ) : (
+            <Link
+              className={`text-3xl font-semibold lg:pl-6 flex flex-row items-center ${styles.navButton}`}
+              to="/Customer">
+              Parking Lot Manager
+            </Link>
+          )}
+          {isLoggedIn ? (
             <div className="ml-12 flex flex-row items-center space-x-16">
-                <Link
-                    className={`text-2xl lg:pl-1 flex flex-row items-center ${styles.navButton}`}
-                    to="/Customer">
-                    Lots
-                </Link>
                 <Link
                     className={`text-2xl lg:pl-1 flex flex-row items-center ${styles.navButton}`}
                     to="/Manager">
@@ -81,6 +86,15 @@ export function HeaderMain() {
                     Managers
                 </Link>
             </div>
+          ):(
+            <div className="ml-12 flex flex-row items-center space-x-16">
+                <Link
+                    className={`text-2xl lg:pl-1 flex flex-row items-center ${styles.navButton}`}
+                    to="/Customer">
+                    Lots
+                </Link>
+            </div>
+          )}
           </div>
         </div>
         <div className="text-white flex p-5 flex-row">
@@ -98,8 +112,8 @@ export function HeaderMain() {
               ) : (
                 <Link
                   className={`text-3xl lg:pl-6 flex flex-row items-center ${styles.navButton}`}
-                  to="/Login">
-                  Login
+                  to="/">
+                  Return to Homepage
                 </Link>
               )}
             </div>

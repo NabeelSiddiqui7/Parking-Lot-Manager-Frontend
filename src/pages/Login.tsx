@@ -4,18 +4,18 @@ import bgImg from "../images/BgMain.svg";
 import { HeaderMain } from "../components/HeaderMain";
 import styles from "../styles/LoginPage.module.css";
 import AuthContext from "../helper/AuthContext";
-
+import { Link } from "react-router-dom";
 
 /*To check if user is logged in, use the following in your page:
 
-const { isLoggedIn } = useContext(AuthContext);
+const { isLoggedIn, userName } = useContext(AuthContext);
 
   return (
     <>
       {isLoggedIn ? (
-        // Your dashboard JSX when the user is logged in
+        // Your dashboard when the user is logged in
       ) : (
-        // Your login form JSX when the user is not logged in
+        // Your login form when the user is not logged in
       )}
     </>
   );
@@ -44,7 +44,7 @@ function LoginForm() {
       if (result === "Manager authenticated") {
         setIsLoggedIn({isLoggedIn: true, userName: username});
         // Login successful, redirect to dashboard or homepage
-        window.location.href = "/";
+        window.location.href = "/Manager";
       } else {
         // Authentication failed, display error message
         setErrorMessage("Invalid username or password");
@@ -69,13 +69,14 @@ function LoginForm() {
           width: "100vw",
           height: "100vh",
           paddingBottom: "10rem",
+          display: "flex",
+          justifyContent: "center",
         }}
       >
         <div
           className="backdrop-blur-main w-screen h-screen"
           style={{ background: "rgba(45, 50, 61, 0.5)" }}
         >
-          <HeaderMain />
           <div className="m-5 lg:m-10 flex flex-col items-center">
               <div className="text-3xl lg:text-6xl font-bold text-[#EFEFEF] py-3">
                     Login
@@ -123,6 +124,15 @@ function LoginForm() {
                   </div>
                 </form>
               </div>
+
+              <div className="flex flex-row mt-10 mb-5 justify-between">
+                    <Link
+                        className="text-3xl text-[#B6B6B6] font-light"
+                        to="/"
+                    >
+                        Back
+                    </Link>
+                </div>
           </div>
         </div>
       </div>
