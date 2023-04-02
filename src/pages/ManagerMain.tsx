@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import { Link } from "react-router-dom";
@@ -48,46 +49,18 @@ export default function ManagerMain() {
             </tr>
           </thead>
           <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-            <td className="px-4 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
+            <td className="px-4 py-4">myfirstlot</td>
+            <td className="px-2 py-4">idk1</td>
+            <td className="px-2 py-4">$10.2</td>
+            <td className="px-2 py-4">4</td>
+            <td className="px-2 py-4">$150</td>
           </tr>
           <tr className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-            <td className="px-4 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
-          </tr>
-          <tr className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-            <td className="px-4 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
-          </tr>
-          <tr className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-            <td className="px-4 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
-          </tr>
-          <tr className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-            <td className="px-4 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
-          </tr>
-          <tr className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-            <td className="px-4 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
-            <td className="px-2 py-4">Lorem Ipsum</td>
+            <td className="px-4 py-4">mySecondlot</td>
+            <td className="px-2 py-4">idk2</td>
+            <td className="px-2 py-4">$5</td>
+            <td className="px-2 py-4">0</td>
+            <td className="px-2 py-4">$100</td>
           </tr>
         </table>
         <button className="mt-3 w-full text-white bg-blue-400 py-1">
