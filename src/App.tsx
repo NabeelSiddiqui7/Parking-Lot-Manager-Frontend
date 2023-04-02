@@ -3,6 +3,7 @@ import React, { useState } from "react";
 // import axios from "axios";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
+import Homepage from "./pages/Homepage";
 import Customer from "./pages/Main";
 import ManagerMain from "./pages/ManagerMain";
 import ManagerListMain from "./pages/ManagerListMain";
@@ -18,7 +19,8 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Customer />} />
+          <Route path="/" element={<Homepage />} />
+          <Route path="/Customer" element={<Customer />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/Manager" element={<ManagerMain />} />
           <Route path="/ManagerList" element={<ManagerListMain />} />
