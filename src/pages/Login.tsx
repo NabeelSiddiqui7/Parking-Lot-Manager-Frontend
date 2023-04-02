@@ -39,7 +39,6 @@ function LoginForm() {
     try {
       const response = await axiosInstance.post("/manager/login", { username, password });
       const result = response.data;
-      console.log(result);
 
       if (result === "Manager authenticated") {
         setIsLoggedIn(true);

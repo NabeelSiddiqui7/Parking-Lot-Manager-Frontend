@@ -20,7 +20,6 @@ export function ParkingLotGrid(props: any) {
         setWidth(props.length);
        },[])
 
-    console.log(props);
     return (
        <>
         <div className={`text-white p-4 grid gap-5 sm:grid-cols-${4} mx-auto`}>
