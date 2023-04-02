@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
-import bgImg from "../images/BgMain.svg";
+import bgImg from "../images/BgMain1.svg";
 import { HeaderMain } from "../components/HeaderMain";
 import styles from "../styles/LoginPage.module.css";
 import AuthContext from "../helper/AuthContext";
