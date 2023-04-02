@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 
 interface AuthContextType {
   isLoggedIn: boolean;
-  setIsLoggedIn: (isLoggedIn: boolean) => void;
+  setIsLoggedIn: (value: { isLoggedIn: boolean, userName: string }) => void;
+  userName: String;
 }
 
 interface AuthProviderProps {
@@ -12,20 +13,26 @@ interface AuthProviderProps {
 const AuthContext = React.createContext<AuthContextType>({
   isLoggedIn: false,
   setIsLoggedIn: () => {},
+  userName: '',
 });
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
+  const [isLoggedIn, setIsLoggedIn] = useState<{ isLoggedIn: boolean; userName: string }>(() => {
     const storedIsLoggedIn = localStorage.getItem("isLoggedIn");
-    return storedIsLoggedIn ? JSON.parse(storedIsLoggedIn) : false;
+    const storedUserName = localStorage.getItem("userName");
+    return {
+      isLoggedIn: storedIsLoggedIn ? JSON.parse(storedIsLoggedIn) : false,
+      userName: storedUserName ? JSON.parse(storedUserName) : "",
+    };
   });
 
   useEffect(() => {
-    localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
+    localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn.isLoggedIn));
+    localStorage.setItem("userName", JSON.stringify(isLoggedIn.userName));
   }, [isLoggedIn]);
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+    <AuthContext.Provider value={{ isLoggedIn: isLoggedIn.isLoggedIn, setIsLoggedIn, userName: isLoggedIn.userName }}>
       {children}
     </AuthContext.Provider>
   );

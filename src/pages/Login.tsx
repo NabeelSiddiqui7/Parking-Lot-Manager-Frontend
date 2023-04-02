@@ -42,7 +42,7 @@ function LoginForm() {
       console.log(result);
 
       if (result === "Manager authenticated") {
-        setIsLoggedIn(true);
+        setIsLoggedIn({isLoggedIn: true, userName: username});
         // Login successful, redirect to dashboard or homepage
         window.location.href = "/";
       } else {
@@ -56,7 +56,7 @@ function LoginForm() {
   };
 
   const handleLogout = () => {
-    setIsLoggedIn(false);
+    setIsLoggedIn({isLoggedIn: false, userName: username});
   };
 
   //New variable to determine if user is logged in

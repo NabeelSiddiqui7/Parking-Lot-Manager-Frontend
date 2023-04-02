@@ -38,7 +38,7 @@ export function HeaderMain() {
 
   //Method to log the user out when clicked
   const handleLogout = () => {
-    setIsLoggedIn(false);
+    setIsLoggedIn({isLoggedIn: false, userName: ''});
   };
 
   const controlNavbar = () => {
@@ -67,7 +67,7 @@ export function HeaderMain() {
             <div className="ml-12 flex flex-row items-center space-x-16">
                 <Link
                     className={`text-2xl lg:pl-1 flex flex-row items-center ${styles.navButton}`}
-                    to="/">
+                    to="/Customer">
                     Lots
                 </Link>
                 <Link
