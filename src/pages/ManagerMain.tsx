@@ -21,9 +21,9 @@ export default function ManagerMain() {
               General Information
             </div>
             <div className="text-xl text-center text-[#EFEFEF] pt-6 px-4 flex flex-col items-center justify-center flex-wrap">
-              <p>Total Revenue: </p>
-              <p>Total Occupancy: </p>
-              <p>Average Rate: </p>
+              <p>Total Revenue: $250</p>
+              <p>Total Occupancy: 12</p>
+              <p>Average Rate: $7.6</p>
             </div>
         </div>
         <div className="flex justify-center text-4xl md:text-5xl font-bold text-[#EFEFEF] pt-6 md:pt-12">
@@ -42,28 +42,28 @@ export default function ManagerMain() {
           <thead className="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="px-6 py-7">Name</th>
-              <th scope="col" className="px-6 py-7">Location</th>
-              <th scope="col" className="px-6 py-7">Rate</th>
-              <th scope="col" className="px-6 py-7">Occupancy</th>
-              <th scope="col" className="px-6 py-7 w-44">Revenue</th>
+              <th scope="col" className="px-4 py-7">Location</th>
+              <th scope="col" className="px-4 py-7">Rate</th>
+              <th scope="col" className="px-4 py-7">Occupancy</th>
+              <th scope="col" className="px-4 py-7 w-44">Revenue</th>
             </tr>
           </thead>
           <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-            <td className="px-4 py-4">myfirstlot</td>
-            <td className="px-2 py-4">idk1</td>
-            <td className="px-2 py-4">$10.2</td>
-            <td className="px-2 py-4">4</td>
-            <td className="px-2 py-4">$150</td>
+            <td className="px-6 py-4">myfirstlot</td>
+            <td className="px-6 py-4">idk1</td>
+            <td className="px-6 py-4">$10.2</td>
+            <td className="px-6 py-4">0</td>
+            <td className="px-6 py-4">$150</td>
           </tr>
           <tr className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-            <td className="px-4 py-4">mySecondlot</td>
-            <td className="px-2 py-4">idk2</td>
-            <td className="px-2 py-4">$5</td>
-            <td className="px-2 py-4">0</td>
-            <td className="px-2 py-4">$100</td>
+            <td className="px-6 py-4">mySecondlot</td>
+            <td className="px-6 py-4">idk2</td>
+            <td className="px-6 py-4">$5</td>
+            <td className="px-6 py-4">12</td>
+            <td className="px-6 py-4">$100</td>
           </tr>
         </table>
-        <button className="mt-3 w-full text-white bg-blue-400 py-1">
+        <button className="mt-3 w-full text-white bg-neutral-700 py-1">
           <div className="flex justify-center items-center">
             Add Lot
             <AiOutlinePlusCircle size={"1.25rem"} className="m-2"/>

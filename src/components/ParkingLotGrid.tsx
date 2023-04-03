@@ -3,6 +3,7 @@ import TicketModal from "./createTicketModal";
 import axios from "axios";
 import { get } from "https";
 import { useEffect, useState } from "react";
+import styles from '../styles/Components.module.css';
 
 
 export function ParkingLotGrid(props: any) {
@@ -23,7 +24,9 @@ export function ParkingLotGrid(props: any) {
     return (
        <>
         <div className={`text-white p-4 grid gap-5 sm:grid-cols-4 mx-auto`}>
-            {indents}
+            {indents.map((indent, index) => (
+                <div className={`${styles["grid-box"]}`} key={index}>{indent}</div>
+            ))}
                 {/* <TicketModal status={"Open"}/>
                 <TicketModal status={"Open"}/>
                 <TicketModal status={"Active"}/>

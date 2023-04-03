@@ -12,3 +12,7 @@
     color: white;
   }
   
+  .grid-box {
+    background-color: red;
+    height: 100%;
+  }
