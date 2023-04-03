@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import { Link } from "react-router-dom";
-import bgImg from "../images/BgMain.svg";
+import bgImg from "../images/BgMain1.svg";
 import { SearchBar } from "../components/SearchBar";
 import { HeaderMain } from "../components/HeaderMain";
 import {SlArrowRight} from "react-icons/sl"
@@ -115,13 +115,13 @@ export default function ManagerListMain() {
   return (
     <div className="h-screen w-100vw" style={{ backgroundImage: `url(${bgImg})` }}>
 
+      <div className="backdrop-blur-main h-full">
       <HeaderMain />
 
-      <div className="flex justify-center text-4xl md:text-5xl font-bold text-[#EFEFEF] mt-10 md:mt-16 mb-4">
-            Managers
-      </div>
+        <div className="flex justify-center text-4xl md:text-5xl font-bold text-[#EFEFEF] mt-10 md:mt-16 mb-4">
+              Managers
+        </div>
 
-      <div className="backdrop-blur-main h-full">
         <div className="p-10 flex justify-center">
           <SearchBar placeholder="Find Manager"/>
           <div className="flex flex-row items-center">
