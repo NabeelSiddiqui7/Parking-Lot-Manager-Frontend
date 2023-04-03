@@ -32,7 +32,10 @@ export default function Homepage() {
         background: "rgba(45, 50, 61, 0.5)" 
     }}
     >
-          <div className="text-3xl lg:text-6xl font-bold text-[#EFEFEF] py-3 text-center">
+          <div className="text-3xl lg:text-8xl font-bold text-[#EFEFEF] py-3 text-center">
+                Parking Lot Manager
+          </div>
+          <div className="text-3xl lg:text-6xl text-[#EFEFEF] py-3 text-center">
                 Hello! What kind of user are you?
           </div>
 
