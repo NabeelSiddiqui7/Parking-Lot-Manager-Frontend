@@ -3,7 +3,6 @@ import TicketModal from "./createTicketModal";
 import axios from "axios";
 import { get } from "https";
 import { useEffect, useState } from "react";
-import styles from '../styles/Components.module.css';
 
 
 export function ParkingLotGrid(props: any) {
