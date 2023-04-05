@@ -8,8 +8,8 @@ import {SlArrowRight} from "react-icons/sl"
 import axios from "axios";
 
 export default function Customer() {
-  const [originalData, setOriginalData] = useState<any[]>([]);
   const [results, setResults] = useState<any[]>(["empty"]);
+  const [search, setSearch] = useState<any>("");
   
 
   const sortItems = [
@@ -28,28 +28,39 @@ export default function Customer() {
     let url = `http://localhost:5000/user/lots?sortField=${sort.field}&order=${sort.order}`;
     const res = await axios.get(url);
     const data = res.data;
-    setOriginalData(data);
-    setResults(data);
+    if(search.length > 0){
+      const filtered = data.filter((obj: { name: any, location:any }) => {
+        return obj.name.startsWith(search) || obj.location.startsWith(search);
+      });
+      setResults(filtered);
+    }
+    else{
+      setResults(data);
+    }
   }
 
 
    useEffect(() => {
     if (filter === 5) {
-      setResults(originalData.filter((item) => item.rate < 5.0));
+      setResults(results.filter((item) => item.rate < 5.0));
     } else if (filter === 10) {
-      setResults(originalData.filter((item) => item.rate < 10.0));
+      setResults(results.filter((item) => item.rate < 10.0));
     } else if (filter === 20) {
-      setResults(originalData.filter((item) => item.rate < 20.0));
+      setResults(results.filter((item) => item.rate < 20.0));
     } else if (filter === 20) {
-      setResults(originalData.filter((item) => item.rate < 10000000.0));
+      setResults(results.filter((item) => item.rate < 10000000.0));
     } else {
-      setResults(originalData);
+      setResults(results);
     }
-  }, [filter, originalData]);
+  }, [filter]);
 
   useEffect(() => {
     getResult();
-   },[sort])
+   },[sort,search]);
+
+   const callback = (e:any) => {
+    setSearch(e.target.value);
+  }
 
   if (results[0] !== "empty") {
     return (
@@ -63,7 +74,7 @@ export default function Customer() {
           </div>
 
           <div className="p-10 flex justify-center">
-            <SearchBar placeholder="Find Lot" />
+            <SearchBar placeholder="Find Lot" func={callback} />
           </div>
 
           <div className="p-10 flex justify-center">

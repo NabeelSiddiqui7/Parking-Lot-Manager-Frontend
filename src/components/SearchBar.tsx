@@ -18,6 +18,7 @@ export function SearchBar(props: any) {
             setCursor(-1);
             setQueryResults(null);
           }}
+          onChange={e=>props.func(e)}
           onClick={() => setCursor(-1)}
           placeholder={props.placeholder}
           className="w-full px-3 py-3 rounded-lg border-blueGray300 bg-transparent outline-none focus:outline-none"

@@ -15,7 +15,6 @@ export default function ParkingLot() {
   const [bookedSpaces, setBookedSpaces] = useState<any[]>([]);
 
   const getResult = async () => {
-    console.log(id);
     let url = `http://localhost:5000/user/lot`;
     const res = await axios.get(url, {params: {id: id }});
     const data = res.data;
@@ -33,7 +32,6 @@ export default function ParkingLot() {
 
   const location = useLocation();
   const data = location.state;
-  console.log(data);
 
   return (
     <div className="h-screen w-100vw" style={{ backgroundImage: `url(${bgImg})` }}>

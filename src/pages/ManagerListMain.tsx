@@ -89,7 +89,6 @@ export default function ManagerListMain() {
   }
 
   useEffect(() => {
-    console.log()
     if (managerList[0]=="empty"){
       getResult();
     }
