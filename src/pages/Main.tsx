@@ -123,10 +123,10 @@ export default function Customer() {
                 {results.map((result:any) => {
                   return <tbody key={result.id} id={result.id}>
                     <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-                      <td className="px-4 py-4">{result.name}</td>
-                      <td className="px-2 py-4">{result.location}</td>
-                      <td className="px-2 py-4">${result.rate}</td>
-                      <td className="px-2 py-4"><div className="flex">Lorem Ipsum <Link className="pl-12" to={`/ParkingLot/${result.id}`} state={{length: result.length, width: result.width, name: result.name}}><SlArrowRight/></Link></div></td>
+                      <td className="px-6 py-4">{result.name}</td>
+                      <td className="px-8 py-4">{result.location}</td>
+                      <td className="px-8 py-4">${result.rate}</td>
+                      <td className="px-8 py-4"><div className="flex"> {result.count} <Link className="pl-12" to={`/ParkingLot/${result.id}`} state={{length: result.length, width: result.width, name: result.name}}><SlArrowRight/></Link></div></td>
                     </tr>
                   </tbody>                
                 })}
