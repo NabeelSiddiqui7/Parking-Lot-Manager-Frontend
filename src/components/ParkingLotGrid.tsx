@@ -3,7 +3,6 @@ import TicketModal from "./createTicketModal";
 import axios from "axios";
 import { get } from "https";
 import { useEffect, useState } from "react";
-import styles from '../styles/Components.module.css';
 
 
 export function ParkingLotGrid(props: any) {
@@ -28,7 +27,6 @@ export function ParkingLotGrid(props: any) {
         <div className={`flex flex-row justify-between flex-wrap mx-auto my-12`} style={{gap:'15px', width:`${96 * width + 15 * width}px`}}>
             {indents}
         </div>
-        {/* <div className={`h-16 bg-gray-50 sm:h-24 sm:square`}></div> */}
        </>
     )
 }
