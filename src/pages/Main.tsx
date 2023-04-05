@@ -122,7 +122,9 @@ export default function Customer() {
           
   
           <div className="m-auto w-2/3 relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            {
+              results.length > 0?
+              <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead className="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                   <th scope="col" className="px-6 py-7">Name</th>
@@ -142,6 +144,9 @@ export default function Customer() {
                   </tbody>                
                 })}
             </table>
+            :
+            <div className="bg-white w-2/3 text-md rounded-md opacity-25 text-black py-12 px-8 mx-auto text-center">No Results Found</div>
+            }
           </div>
         </div>
       </div>
