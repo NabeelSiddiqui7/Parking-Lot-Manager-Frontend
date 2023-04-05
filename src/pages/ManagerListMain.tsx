@@ -23,7 +23,6 @@ function NewModal(props: {isOpen:boolean, handleOpen: () => void, handleClose: (
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({...formData, [event.target.name]:event.target.value })
-    console.log(formData);
   }
 
 
@@ -34,7 +33,6 @@ function NewModal(props: {isOpen:boolean, handleOpen: () => void, handleClose: (
 
     axios.post(url, {params: formData})
         .then(response => {
-          console.log(response.data);
         })
         .catch(error => {
           console.error(error);
@@ -111,7 +109,6 @@ export default function ManagerListMain() {
   }
 
   useEffect(() => {
-    console.log()
     if (managerList[0]=="empty"){
       getResult();
     }

@@ -8,12 +8,13 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: '1/vw',
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
   borderRadius: 3,
   p: 4,
+  margin: 'auto'
 };
 
 export default function TicketModal(props:any) {
@@ -27,18 +28,6 @@ export default function TicketModal(props:any) {
     license_plate: '',
     time: new Date()
   }) 
-
-  // const handleCreateTicket = () => {
-
-  //   let url = "localhost:3000/user"
-  //   try {
-  //     const res = axios.post()
-  //   }
-  //   catch (e){
-
-  //   }
-  // }
-
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({...formData, [event.target.name]:event.target.value })
@@ -59,8 +48,8 @@ export default function TicketModal(props:any) {
 
   return (
     <>
-      <button onClick={handleOpen}>
-        <div className={`h-16 ${colour} sm:h-24 sm:square`}></div>
+      <button id={props.id} onClick={handleOpen} style={{width: '96px', height: '96px'}}>
+        <div className={`h-16 m-autop ${colour} sm:h-24`}></div>
       </button>
       <Modal
         open={open}
