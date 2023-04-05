@@ -36,7 +36,7 @@ export default function TicketModal(props:any) {
 
   React.useEffect(()=>{
     if(props.status == "Open"){
-        setColour("bg-red-700");
+        setColour("bg-gray-50");
     }
     else if (props.status == "Active"){
         setColour("bg-blue-400");
