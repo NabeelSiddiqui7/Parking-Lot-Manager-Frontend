@@ -160,17 +160,6 @@ export default function ManagerListMain() {
     });
   }
 
-  const deleteManager = (username:string) => {
-
-    
-
-    let url = `http://localhost:5000/manager/managers`;
-    const res =  axios.delete(url, { data: {userName: username}}).then(()=>{
-      handleCloseConfirm();
-      getResult();
-    });
-  }
-
   const handleOpen = () => {
     setOpen(true);
   }
@@ -227,16 +216,16 @@ export default function ManagerListMain() {
                             <MdDelete/>
                           </button>
                           <Modal
-                          open={openConfirm}
-                          onClose={handleCloseConfirm}
-                          aria-labelledby="modal-modal-title"
-                          aria-describedby="modal-modal-description"
+                            open={openConfirm}
+                            onClose={handleCloseConfirm}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
                           >
                             <Box sx={style}>
-                              <h2 className='mb-6 text-center'>Are You Sure You Want To Delete Manager: <span className="text-blue-700 font-bold">{username}</span></h2>           
-                              <div className="flex justify-between px-8">
-                                <button className="bg-red my-2 p-2 rounded-md" onClick={()=>handleDelete(username)} type="submit" form="createTicket" value="Submit">Delete</button>
-                                <button className="bg-gray-400 my-2 p-2 rounded-md" onClick={handleCloseConfirm} type="submit" form="createTicket" value="Submit">Cancel</button>
+                              <h2 className='mb-6 text-center text-gray-600'>Are you sure you want to delete manager: <span className="text-blue-700 font-bold">{username}</span>?</h2>           
+                              <div className="flex justify-between px-6">
+                                <button className="bg-red my-2 p-2 rounded-sm text-white px-4" onClick={()=>handleDelete(username)} type="submit" form="createTicket" value="Submit">Delete</button>
+                                <button className="bg-gray-400 my-2 p-2 rounded-sm text-white px-4" onClick={handleCloseConfirm} type="submit" form="createTicket" value="Submit">Cancel</button>
                               </div>
                             </Box>
                           </Modal>
