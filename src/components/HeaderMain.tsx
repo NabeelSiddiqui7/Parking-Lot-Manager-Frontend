@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 // import "@szhsin/react-menu/dist/index.css";
 // import "@szhsin/react-menu/dist/transitions/slide.css";
 import styles from "../styles/HeaderMain.module.css";
@@ -11,6 +11,8 @@ export function HeaderMain() {
   const [isDesktop, setDesktop] = useState(window.innerWidth > 1024);
   const { setIsLoggedIn } = useContext(AuthContext);                      //Used to set the login status to logged out if it's clicked
   const { isLoggedIn } = useContext(AuthContext);                         //Variable to determine if user is logged in
+
+  const location = useLocation();
 
   useEffect(() => {
     window.addEventListener("resize", updateMedia);
@@ -75,24 +77,33 @@ export function HeaderMain() {
           )}
           {isLoggedIn ? (
             <div className="ml-12 flex flex-row items-center space-x-16">
-                <Link
-                    className={`text-2xl lg:pl-1 flex flex-row items-center ${styles.navButton}`}
-                    to="/Manager">
-                    Manage Lots
-                </Link>
-                <Link
-                    className={`text-2xl lg:pl-1 flex flex-row items-center ${styles.navButton}`}
-                    to="/ManagerList">
-                    Managers
-                </Link>
+              <Link
+                className={`text-2xl lg:pl-1 flex flex-row items-center ${
+                  location.pathname === "/Manager" ? styles.navButtonActive : styles.navButton
+                }`}
+                to="/Manager"
+              >
+                Manage Lots
+              </Link>
+              <Link
+                className={`text-2xl lg:pl-1 flex flex-row items-center ${
+                  location.pathname === "/ManagerList" ? styles.navButtonActive : styles.navButton
+                }`}
+                to="/ManagerList"
+              >
+                Managers
+              </Link>
             </div>
           ):(
             <div className="ml-12 flex flex-row items-center space-x-16">
-                <Link
-                    className={`text-2xl lg:pl-1 flex flex-row items-center ${styles.navButton}`}
-                    to="/Customer">
-                    Lots
-                </Link>
+              <Link
+                className={`text-2xl lg:pl-1 flex flex-row items-center ${
+                  location.pathname === "/Customer" ? styles.navButtonActive : styles.navButton
+                }`}
+                to="/Customer"
+              >
+                Lots
+              </Link>
             </div>
           )}
           </div>

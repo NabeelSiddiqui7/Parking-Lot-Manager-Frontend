@@ -52,6 +52,12 @@
     color: #EFEFEF;
     transition: ease-in 0.2s;
   }
+
+  .navButtonActive {
+    color: #EFEFEF;
+    transition: ease-in 0.2s;
+    border-bottom: 2px solid #EFEFEF;
+  }
   
   .navButton:hover {
     color: white;
