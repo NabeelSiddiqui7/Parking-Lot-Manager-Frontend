@@ -182,9 +182,9 @@ export default function ManagerMain() {
               General Information
             </div>
             <div className="text-xl text-center text-[#EFEFEF] pt-6 px-4 flex flex-col items-center justify-center flex-wrap">
-              <p>Total Revenue: ${totalRevenue}</p>
-              <p>Total Availability: {totalOccupancy}</p>
-              <p>Average Rate: ${averageRate.toFixed(2)}</p>
+              <p><b>Total Revenue:</b> ${totalRevenue}</p>
+              <p><b>Total Availability:</b> {totalOccupancy}</p>
+              <p><b>Average Rate:</b> ${averageRate.toFixed(2)}</p>
             </div>
         </div>
         <div className="flex justify-center text-4xl md:text-5xl font-bold text-[#EFEFEF] pt-6 md:pt-12">

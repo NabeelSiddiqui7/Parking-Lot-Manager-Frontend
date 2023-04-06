@@ -114,9 +114,8 @@ export default function Customer() {
 
           <div className="p-10 flex justify-center">
             <SearchBar placeholder="Find Lot" func={callback} />
-          </div>
 
-          <div className="p-10 flex justify-center">
+            <div className="flex flex-row items-center">
             <p className="mx-5 text-white">Sort:</p>
             <Select 
               className="text-base text-black"
@@ -157,7 +156,7 @@ export default function Customer() {
                 isSearchable={false}
               />
               
-              <p className="mx-5 text-white">Occupency:</p>
+              <p className="mx-5 text-white">Occupancy:</p>
               <Select
               className="text-base text-black"
               onChange={(e) => {
@@ -179,6 +178,7 @@ export default function Customer() {
                 isSearchable={false}
               />
           </div>
+        </div>
           
           
   
