@@ -81,6 +81,8 @@ function AddManagerModal(props: {isOpen:boolean, handleOpen: () => void, handleC
 
 export default function ManagerListMain() {
   const [managerList, setManagerList] = useState<any[]>(["empty"]);
+  const [originalResults, setOriginalResults] = useState<any[]>([]);
+  const [search, setSearch] = useState<any>("");
   const [username, setUsername] = useState<any>("");
   const [open, setOpen] = useState(false);
   const [openConfirm, setOpenConfirm] = React.useState(false);
@@ -121,13 +123,31 @@ export default function ManagerListMain() {
     const res = await axios.get(url);
     const data = res.data;
     setManagerList(data);
+    setOriginalResults(data);
   }
 
   useEffect(() => {
     if (managerList[0]=="empty"){
       getResult();
     }
-  })
+  },[managerList]);
+
+  useEffect(()=>{
+    if (search.length > 0) {
+      const filtered = managerList.filter(
+        (obj: { name: any; username: any }) => {
+          return (
+            obj.name.toLowerCase().startsWith(search.toLowerCase()) ||
+            obj.username.toLowerCase().startsWith(search.toLowerCase())
+          );
+        }
+      );
+      setManagerList(filtered);
+    }
+    else{
+      setManagerList(originalResults);
+    }
+  },[search])
 
   const handleDelete = async (username: string) => {
     const axiosInstance = axios.create({
@@ -140,23 +160,16 @@ export default function ManagerListMain() {
     });
   }
 
-  const deleteManager = (username:string) => {
-
-    
-
-    let url = `http://localhost:5000/manager/managers`;
-    const res =  axios.delete(url, { data: {userName: username}}).then(()=>{
-      handleCloseConfirm();
-      getResult();
-    });
-  }
-
   const handleOpen = () => {
     setOpen(true);
   }
 
   const handleClose = () => {
     setOpen(false);
+  }
+  
+  const callback = (e:any) => {
+    setSearch(e.target.value);
   }
 
   return (
@@ -170,13 +183,16 @@ export default function ManagerListMain() {
         </div>
 
         <div className="p-10 flex justify-center">
-          <SearchBar placeholder="Find Manager"/>
+          <SearchBar placeholder="Find Manager" func={callback}/>
           <div className="flex flex-row items-center">
           </div>
         </div>
 
         
       <div className="m-auto w-1/3 relative overflow-x-auto shadow-md sm:rounded-lg">
+        {
+          managerList.length > 0?
+          <>
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead className="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -200,16 +216,16 @@ export default function ManagerListMain() {
                             <MdDelete style={{color: 'FireBrick'}} />
                           </button>
                           <Modal
-                          open={openConfirm}
-                          onClose={handleCloseConfirm}
-                          aria-labelledby="modal-modal-title"
-                          aria-describedby="modal-modal-description"
+                            open={openConfirm}
+                            onClose={handleCloseConfirm}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
                           >
                             <Box sx={style}>
-                              <h2 className='mb-6 text-center'>Are You Sure You Want To Delete Manager: <span className="text-blue-700 font-bold">{username}</span></h2>           
-                              <div className="flex justify-between px-8">
-                                <button className="bg-red my-2 p-2 rounded-md" onClick={()=>handleDelete(username)} type="submit" form="createTicket" value="Submit">Delete</button>
-                                <button className="bg-gray-400 my-2 p-2 rounded-md" onClick={handleCloseConfirm} type="submit" form="createTicket" value="Submit">Cancel</button>
+                              <h2 className='mb-6 text-center text-gray-600'>Are you sure you want to delete manager: <span className="text-blue-700 font-bold">{username}</span>?</h2>           
+                              <div className="flex justify-between px-6">
+                                <button className="bg-red my-2 p-2 rounded-sm text-white px-4" onClick={()=>handleDelete(username)} type="submit" form="createTicket" value="Submit">Delete</button>
+                                <button className="bg-gray-400 my-2 p-2 rounded-sm text-white px-4" onClick={handleCloseConfirm} type="submit" form="createTicket" value="Submit">Cancel</button>
                               </div>
                             </Box>
                           </Modal>
@@ -226,8 +242,12 @@ export default function ManagerListMain() {
               </div>
             </button>
             <AddManagerModal isOpen={open} handleOpen={()=>handleOpen()} handleClose={()=>handleClose()} setManagerList={(value:any)=>setManagerList(value)}/>
-          </div>
-          
+          </>
+          :
+          <div className="bg-white w-2/3 text-md rounded-md opacity-25 text-black py-12 px-8 mx-auto text-center">No Results Found</div>
+        }
+      </div>
+      
       </div>
     </div>
   );
