@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 
 export function ParkingLotGrid(props: any) {
     const [width, setWidth] = useState(4);
+    const [status, setStatus] = useState(props.status);
     var indents = [];
     var key = 0;
     for (var i = 0; i < props.length; i++) {

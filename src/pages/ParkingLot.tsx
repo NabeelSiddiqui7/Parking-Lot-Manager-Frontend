@@ -38,11 +38,7 @@ export default function ParkingLot() {
     const lotsRes = await axios.get(lotsUrl);
     const newdata = lotsRes.data;
     const filteredList = newdata.filter((data:any) => data.id == Number(id));
-    console.log("filteredBooks", filteredList)
     setParkingLotData(filteredList[0]);
-    console.log("filteredLots", parkingLotData);
-
-
   }
 
   useEffect(() => {

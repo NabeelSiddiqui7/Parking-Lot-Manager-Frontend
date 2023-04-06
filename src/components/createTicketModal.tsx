@@ -77,6 +77,7 @@ function SelectLabels(props: {hours: string, minutes:string, setHours: (value:st
 
 export default function TicketModal(props:any) {
   const [open, setOpen] = React.useState(false);
+  const [status, setStatus] = React.useState(props.status);
   const [colour, setColour] = React.useState("bg-gray-50");
   const [bookTicketHours, setHours] = React.useState('0');
   const [bookTicketMinutes, setMinutes] = React.useState('0');
@@ -95,20 +96,33 @@ export default function TicketModal(props:any) {
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({...formData, [event.target.name]:event.target.value })
-    console.log(formData);
+  }
+
+  const getResult = async () => {
+    let url = `http://localhost:5000/user/ticket`;
+    const res = await axios.get(url, {params: {id: props.id }}).then((res)=>{
+      const data = res.data;
+      if(data.length > 0){
+        console.log(data);
+        if(data[0].booked == true){
+          setStatus("Booked");
+          setColour("bg-blue-400");
+        }
+      }
+    });
   }
 
   React.useEffect(()=>{
-    if(props.status == "Open"){
+    if(status == "Open"){
         setColour("bg-gray-50");
     }
-    else if (props.status == "Active"){
+    else if (status == "Active"){
         setColour("bg-blue-400");
     }
     else{
         setColour("bg-gray-400");
     }
-  })
+  },[status]);
 
   const createTicket = async () => {
 
@@ -133,34 +147,28 @@ export default function TicketModal(props:any) {
     let updatedTimeString = String(updatedHour)+(":")+String(updatedMinutes)+(":")+tempDate[1].split(":")[2]
     let updatedDateStamp = tempDate[0] + " "+ updatedTimeString
 
-    console.log("updatedtempdate", updatedDateStamp);
-    console.log("tempminutes", updatedMinutes);
-    console.log("temphours", updatedHour);
-
     // Sending the request
     let url = `http://localhost:5000/user/ticket`;
-    let getUrl = `http://localhost:5000/user/lot?id=4`;
     const requestBody: URLSearchParams = new URLSearchParams();
     requestBody.append("spaceid", (props.id));
     requestBody.append("time", updatedDateStamp);
 
-    const response = await axios.post(url, requestBody);
-    console.log("response", response);
-    const res2 = await axios.get(getUrl);
-    console.log("data", res2.data)
+    const response = await axios.post(url, requestBody).then(()=>{
+      getResult();
+    });
     }
 
   const getRate = (rhours:string, rminutes:string) => {
     let rate = props.rate;
     let totalPrice = rate * (Number(rhours)+Number(rminutes)/60);
-    console.log("totalPrice", Number(rhours)+Number(rminutes)/60);
     return totalPrice.toFixed(2);
   }
 
+  getResult();
 
   return (
     <>
-      <button id={props.id} onClick={handleOpen} style={{width: '64px', height: '64px'}}>
+      <button className={`${status!="Taken"?'cursor-pointer':'cursor-default'}`} id={props.id} onClick={handleOpen} style={{width: '64px', height: '64px'}}>
         <div className={`h-16 ${colour} sm:h-16`}></div>
       </button>
       <Modal
@@ -169,7 +177,7 @@ export default function TicketModal(props:any) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        {props.status == "Open" ?(
+        {status == "Open" ?(
           <Box sx={style}>
             <h2 className='mb-2'>Book Spot: {props.id}</h2>
             <form id='createTicket' onSubmit={createTicket}>
@@ -185,7 +193,7 @@ export default function TicketModal(props:any) {
             <button className="bg-blue-400 my-2 p-2 rounded-md" type="submit" form="createTicket" value="Submit">Submit</button>
           </Box>
         )
-        : props.status == "Booked"? 
+        : status == "Booked"? 
         (
           <Box sx={style}>
             <h2 className='mb-2'>Extend Spot: {props.id}</h2>
