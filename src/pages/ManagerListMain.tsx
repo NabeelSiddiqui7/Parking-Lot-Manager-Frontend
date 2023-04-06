@@ -197,7 +197,7 @@ export default function ManagerListMain() {
                         <div className="pl-6 flex justify-between items-center">
                           {(result.username)} 
                           <button className="pl-12 pr-6" onClick={()=>handleOpenConfirm(result.username)}>
-                            <MdDelete/>
+                            <MdDelete style={{color: 'FireBrick'}} />
                           </button>
                           <Modal
                           open={openConfirm}
