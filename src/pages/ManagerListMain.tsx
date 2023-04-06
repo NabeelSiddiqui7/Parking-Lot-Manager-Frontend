@@ -67,6 +67,8 @@ function NewModal(props: {isOpen:boolean, handleOpen: () => void, handleClose: (
 
 export default function ManagerListMain() {
   const [managerList, setManagerList] = useState<any[]>(["empty"]);
+  const [originalResults, setOriginalResults] = useState<any[]>([]);
+  const [search, setSearch] = useState<any>("");
   const [username, setUsername] = useState<any>("");
   const [open, setOpen] = useState(false);
   const [openConfirm, setOpenConfirm] = React.useState(false);
@@ -107,13 +109,31 @@ export default function ManagerListMain() {
     const res = await axios.get(url);
     const data = res.data;
     setManagerList(data);
+    setOriginalResults(data);
   }
 
   useEffect(() => {
     if (managerList[0]=="empty"){
       getResult();
     }
-  })
+  },[managerList]);
+
+  useEffect(()=>{
+    if (search.length > 0) {
+      const filtered = managerList.filter(
+        (obj: { name: any; username: any }) => {
+          return (
+            obj.name.toLowerCase().startsWith(search.toLowerCase()) ||
+            obj.username.toLowerCase().startsWith(search.toLowerCase())
+          );
+        }
+      );
+      setManagerList(filtered);
+    }
+    else{
+      setManagerList(originalResults);
+    }
+  },[search])
 
 
   const deleteManager = (username:string) => {
@@ -132,6 +152,10 @@ export default function ManagerListMain() {
   const handleClose = () => {
     setOpen(false);
   }
+  
+  const callback = (e:any) => {
+    setSearch(e.target.value);
+  }
 
   return (
     <div className="h-screen w-100vw" style={{ backgroundImage: `url(${bgImg})` }}>
@@ -144,7 +168,7 @@ export default function ManagerListMain() {
         </div>
 
         <div className="p-10 flex justify-center">
-          <SearchBar placeholder="Find Manager"/>
+          <SearchBar placeholder="Find Manager" func={callback}/>
           <div className="flex flex-row items-center">
             <p className="mx-5 text-white">Filter:</p>
             <Select className="text-base text-black"/>
@@ -153,6 +177,9 @@ export default function ManagerListMain() {
 
         
       <div className="m-auto w-1/3 relative overflow-x-auto shadow-md sm:rounded-lg">
+        {
+          managerList.length > 0?
+          <>
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead className="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -198,7 +225,11 @@ export default function ManagerListMain() {
               </div>
             </button>
             <NewModal isOpen={open} handleOpen={()=>handleOpen()} handleClose={()=>handleClose()} setManagerList={(value:any)=>setManagerList(value)}/>
-          </div>
+          </>
+          :
+          <div className="bg-white w-2/3 text-md rounded-md opacity-25 text-black py-12 px-8 mx-auto text-center">No Results Found</div>
+        }
+      </div>
           
       </div>
     </div>
