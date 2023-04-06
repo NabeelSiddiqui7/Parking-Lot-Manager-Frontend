@@ -13,6 +13,15 @@ export default function ParkingLot() {
   const { id } = useParams()
   const [results, setResults] = useState<any[]>(["empty"]);
   const [bookedSpaces, setBookedSpaces] = useState<any[]>([]);
+  const [parkingLotData, setParkingLotData] = React.useState({
+    id: 0,
+    length: 0,
+    location: 'empty',
+    managerusername: '',
+    name: '',
+    rate: '',
+    width: 0
+  }) 
 
   const getResult = async () => {
     let url = `http://localhost:5000/user/lot`;
@@ -24,6 +33,16 @@ export default function ParkingLot() {
       booked.push(data.booked[i].id);
     }
     setBookedSpaces(booked);
+
+    let lotsUrl = `http://localhost:5000/user/lots?sortField=$name&order=$asc`;
+    const lotsRes = await axios.get(lotsUrl);
+    const newdata = lotsRes.data;
+    const filteredList = newdata.filter((data:any) => data.id == Number(id));
+    console.log("filteredBooks", filteredList)
+    setParkingLotData(filteredList[0]);
+    console.log("filteredLots", parkingLotData);
+
+
   }
 
   useEffect(() => {
@@ -33,17 +52,22 @@ export default function ParkingLot() {
   const location = useLocation();
   const data = location.state;
 
-  return (
-    <div className="h-screen w-100vw" style={{ backgroundImage: `url(${bgImg})` }}>
+  if (parkingLotData.location != "empty"){
+    return (
+      <div className="h-screen w-100vw" style={{ backgroundImage: `url(${bgImg})` }}>
 
-      <HeaderMain />
+        <HeaderMain />
 
-      <div className="backdrop-blur-main h-full flex flex-col">
-        <div className="flex justify-center text-4xl md:text-5xl font-bold text-[#EFEFEF] pt-10 md:pt-16 mb-4">
-            Parking Lot: {data.name}
+        <div className="backdrop-blur-main h-full flex flex-col">
+          <div className="flex justify-center text-4xl md:text-5xl font-bold text-[#EFEFEF] pt-10 md:pt-16 mb-4">
+              Parking Lot: {parkingLotData.name}
+          </div>
+          {/* <ParkingLotGrid results={results} booked={bookedSpaces} length={data.length} width={data.width}/> */}
+          <ParkingLotGrid results={results} booked={bookedSpaces} rate={parkingLotData.rate} length={parkingLotData.length} width={parkingLotData.width}/>
         </div>
-        <ParkingLotGrid results={results} booked={bookedSpaces} length={data.length} width={data.width}/>
       </div>
-    </div>
-  );
+    );
+  } else {return (
+    <></>
+  )}
 }
