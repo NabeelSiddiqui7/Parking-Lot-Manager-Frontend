@@ -19,10 +19,17 @@ export default function ManagerMain() {
   const { isLoggedIn, userName } = useContext(AuthContext);
   const [results, setResults] = useState<any[]>(["empty"]);
   const [search, setSearch] = useState<any>("");
+  const [lotname, setLotName] = useState<any>("");
   const [originalResults, setOriginalResults] = useState<any[]>([]);
   const [totalRevenue, setTotalRevenue] = useState<number>(0);
   const [totalOccupancy, setTotalOccupancy] = useState<number>(0);
   const [averageRate, setAverageRate] = useState<number>(0);
+  const [openConfirm, setOpenConfirm] = React.useState(false);
+  const handleOpenConfirm = (lotname:any) => {
+    setOpenConfirm(true)
+    setLotName(lotname);
+  };
+  const handleCloseConfirm = () => setOpenConfirm(false);
 
   const sortItems = [
     { display: "Name, Asc.", field: "name", order: "asc" },
@@ -113,8 +120,10 @@ export default function ManagerMain() {
   const deleteData = async (lotid: any) => {
     console.log(lotid);
     let url = `http://localhost:5000/manager/lots/${lotid}`;
-    const res = await axios.delete(url);
-    getResult();
+    const res = await axios.delete(url).then(()=>{
+      handleCloseConfirm();
+      getResult();
+    });
   }
 
   function handleDelete(lotid:any) {
@@ -261,15 +270,25 @@ export default function ManagerMain() {
                       <td className="px-8 py-4">${result.revenue}</td>
                       <td className="px-1 py-4">
                       <button
-                        onClick={() => {
-                          if (window.confirm("Are you sure you want to delete this lot from the database?")) {
-                            handleDelete(result.id);
-                          }
-                        }}
+                        onClick={()=>handleOpenConfirm(result.name)}
                         className="bg-red-500 hover:bg-red-700 font-bold py-2 px-4 rounded"
                       >
                         <MdDelete style={{color: 'FireBrick'}} />
                       </button>
+                      <Modal
+                            open={openConfirm}
+                            onClose={handleCloseConfirm}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                          >
+                            <Box sx={style}>
+                              <h2 className='mb-6 text-center text-gray-600'>Are you sure you want to delete lot: <span className="text-blue-700 font-bold">{lotname}</span>?</h2>           
+                              <div className="flex justify-between px-6">
+                                <button className="bg-red my-2 p-2 rounded-sm text-white px-4" onClick={()=>handleDelete(result.id)} type="submit" form="createTicket" value="Submit">Delete</button>
+                                <button className="bg-gray-400 my-2 p-2 rounded-sm text-white px-4" onClick={handleCloseConfirm} type="submit" form="createTicket" value="Submit">Cancel</button>
+                              </div>
+                            </Box>
+                          </Modal>
                       </td>
                     </tr>
                   </tbody>                
