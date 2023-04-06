@@ -58,7 +58,7 @@ function SelectLabels(props: {hours: string, minutes:string, setHours: (value:st
         <FormHelperText>Hours</FormHelperText>
       </FormControl>
       <FormControl sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-helper-label">Minutes</InputLabel>
+      <InputLabel id="demo-simple-select-helper-label">Minutes</InputLabel>
         <Select
           value={props.minutes}
           onChange={handleMinutesChange}
@@ -84,6 +84,8 @@ export default function TicketModal(props:any) {
   const [extendHours, setExtendHours] = React.useState('0');
   const [extendMinutes, setExtendMinutes] = React.useState('0');
 
+  const [ticketId, setTicketId] = React.useState(0);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false); 
 
@@ -102,6 +104,7 @@ export default function TicketModal(props:any) {
     let url = `http://localhost:5000/user/ticket`;
     const res = await axios.get(url, {params: {id: props.id }}).then((res)=>{
       const data = res.data;
+      setTicketId(data.id);
       if(data.length > 0){
         console.log(data);
         if(data[0].booked == true){
@@ -158,6 +161,40 @@ export default function TicketModal(props:any) {
     });
     }
 
+    const extendTicket = async () => {
+
+      const date = new Date(); 
+      const isoString = date.toISOString(); 
+      const dateString = isoString.replace("T", " ").replace("Z", ""); 
+  
+      let tempDate = dateString.split(" ");
+      let temphours = ((Number(tempDate[1].split(":")[0])%12)+Number(extendHours))%12;
+      let tempminutes = ((Number(tempDate[1].split(":")[1])+Number(extendMinutes)));
+      if (tempminutes>60){
+        temphours+=1
+        tempminutes = tempminutes % 60
+      }
+  
+      let updatedHour = tempDate[1].split(":")[0]
+          updatedHour = String(temphours)
+  
+      let updatedMinutes = tempDate[1].split(":")[1]
+          updatedMinutes = String(tempminutes)
+  
+      let updatedTimeString = String(updatedHour)+(":")+String(updatedMinutes)+(":")+tempDate[1].split(":")[2]
+      let updatedDateStamp = tempDate[0] + " "+ updatedTimeString
+  
+      // Sending the request
+      let url = `http://localhost:5000/user/ticket`;
+      const requestBody: URLSearchParams = new URLSearchParams();
+      requestBody.append("id", (props.id));
+      requestBody.append("time", updatedDateStamp);
+  
+      const response = await axios.put(url, requestBody).then(()=>{
+        getResult();
+      });
+      }
+
   const getRate = (rhours:string, rminutes:string) => {
     let rate = props.rate;
     let totalPrice = rate * (Number(rhours)+Number(rminutes)/60);
@@ -197,7 +234,7 @@ export default function TicketModal(props:any) {
         (
           <Box sx={style}>
             <h2 className='mb-2'>Extend Spot: {props.id}</h2>
-            <form id='createTicket'>
+            <form id='extendTicket' onSubmit={extendTicket}>
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name: </label>
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">License Plate: </label>
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Time</label>
@@ -205,7 +242,7 @@ export default function TicketModal(props:any) {
               <SelectLabels hours={extendHours} minutes={extendMinutes} setHours={setExtendHours} setMinutes={setExtendMinutes}/>
               <h2 className='my-4'>Total: ${getRate(extendHours, extendMinutes)}</h2>
             </form>            
-            <button className="bg-blue-400 my-2 p-2 rounded-md" type="submit" form="createTicket" value="Submit">Submit</button>
+            <button className="bg-blue-400 my-2 p-2 rounded-md" type="submit" form="extendTicket" value="Submit">Submit</button>
           </Box>
         ):<></>}
       </Modal>
