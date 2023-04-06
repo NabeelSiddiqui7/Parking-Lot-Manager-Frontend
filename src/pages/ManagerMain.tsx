@@ -19,10 +19,17 @@ export default function ManagerMain() {
   const { isLoggedIn, userName } = useContext(AuthContext);
   const [results, setResults] = useState<any[]>(["empty"]);
   const [search, setSearch] = useState<any>("");
+  const [lotname, setLotName] = useState<any>("");
   const [originalResults, setOriginalResults] = useState<any[]>([]);
   const [totalRevenue, setTotalRevenue] = useState<number>(0);
   const [totalOccupancy, setTotalOccupancy] = useState<number>(0);
   const [averageRate, setAverageRate] = useState<number>(0);
+  const [openConfirm, setOpenConfirm] = React.useState(false);
+  const handleOpenConfirm = (lotname:any) => {
+    setOpenConfirm(true)
+    setLotName(lotname);
+  };
+  const handleCloseConfirm = () => setOpenConfirm(false);
 
   const sortItems = [
     { display: "Name, Asc.", field: "name", order: "asc" },
@@ -113,8 +120,10 @@ export default function ManagerMain() {
   const deleteData = async (lotid: any) => {
     console.log(lotid);
     let url = `http://localhost:5000/manager/lots/${lotid}`;
-    const res = await axios.delete(url);
-    getResult();
+    const res = await axios.delete(url).then(()=>{
+      handleCloseConfirm();
+      getResult();
+    });
   }
 
   function handleDelete(lotid:any) {
@@ -237,7 +246,10 @@ export default function ManagerMain() {
         </div>
 
         <div className="m-auto w-2/3 relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          {
+            results.length > 0 ?
+            <>
+              <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead className="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                   <th scope="col" className="px-6 py-7">Name</th>
@@ -258,51 +270,65 @@ export default function ManagerMain() {
                       <td className="px-8 py-4">${result.revenue}</td>
                       <td className="px-1 py-4">
                       <button
-                        onClick={() => {
-                          if (window.confirm("Are you sure you want to delete this lot from the database?")) {
-                            handleDelete(result.id);
-                          }
-                        }}
+                        onClick={()=>handleOpenConfirm(result.name)}
                         className="bg-red-500 hover:bg-red-700 font-bold py-2 px-4 rounded"
                       >
                         <MdDelete style={{color: 'FireBrick'}} />
                       </button>
+                      <Modal
+                            open={openConfirm}
+                            onClose={handleCloseConfirm}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                          >
+                            <Box sx={style}>
+                              <h2 className='mb-6 text-center text-gray-600'>Are you sure you want to delete lot: <span className="text-blue-700 font-bold">{lotname}</span>?</h2>           
+                              <div className="flex justify-between px-6">
+                                <button className="bg-red my-2 p-2 rounded-sm text-white px-4" onClick={()=>handleDelete(result.id)} type="submit" form="createTicket" value="Submit">Delete</button>
+                                <button className="bg-gray-400 my-2 p-2 rounded-sm text-white px-4" onClick={handleCloseConfirm} type="submit" form="createTicket" value="Submit">Cancel</button>
+                              </div>
+                            </Box>
+                          </Modal>
                       </td>
                     </tr>
                   </tbody>                
                 })}
-            </table>
-            <button className="mt-3 w-full text-white bg-blue-400 py-1" onClick={handleOpen}>
-              <div className="flex justify-center items-center">
-                Add Lot
-                <AiOutlinePlusCircle size={"1.25rem"} className="m-2"/>
-              </div>
-            </button>
-            <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <Box sx={style}>
-                <h2 className='mb-2'>Create Lot</h2>
-                  <form id='createTicket' onSubmit={handleSubmit}>
-                      <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Lot Name</label>
-                      <input type="text" name="full_name" onChange={handleInput} className="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required/>
-                      <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Columns</label>
-                      <input type="number" min="0" name="columns" onChange={handleInput} className="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required/>
-                      <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rows</label>
-                      <input type="number" min="0" name="rows" onChange={handleInput} className="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required/>
-                      <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Location</label>
-                      <input type="text" name="location" onChange={handleInput} className="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required/>
-                      <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rate</label>
-                      <input type="number" min="0" name="rate" onChange={handleInput} className="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required/>
-                      <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Overtime Rate</label>
-                      <input type="number" min="0" name="overtime" onChange={handleInput} className="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required/>
-                  </form>            
-                <button className="bg-blue-400 my-2 p-2 rounded-md" type="submit" form="createTicket" value="Submit">Submit</button>
-              </Box>
-            </Modal>
+              </table>
+              <button className="mt-3 w-full text-white bg-blue-400 py-1" onClick={handleOpen}>
+                <div className="flex justify-center items-center">
+                  Add Lot
+                  <AiOutlinePlusCircle size={"1.25rem"} className="m-2"/>
+                </div>
+              </button>
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={style}>
+                  <h2 className='mb-2'>Create Lot</h2>
+                    <form id='createTicket' onSubmit={handleSubmit}>
+                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Lot Name</label>
+                        <input type="text" name="full_name" onChange={handleInput} className="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required/>
+                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Columns</label>
+                        <input type="number" min="0" name="columns" onChange={handleInput} className="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required/>
+                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rows</label>
+                        <input type="number" min="0" name="rows" onChange={handleInput} className="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required/>
+                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Location</label>
+                        <input type="text" name="location" onChange={handleInput} className="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required/>
+                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rate</label>
+                        <input type="number" min="0" name="rate" onChange={handleInput} className="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required/>
+                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Overtime Rate</label>
+                        <input type="number" min="0" name="overtime" onChange={handleInput} className="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required/>
+                    </form>            
+                  <button className="bg-blue-400 my-2 p-2 rounded-md" type="submit" form="createTicket" value="Submit">Submit</button>
+                </Box>
+              </Modal>
+            </>
+            :
+            <div className="bg-white w-2/3 text-md rounded-md opacity-25 text-black py-12 px-8 mx-auto text-center">No Results Found</div>
+          }
           </div>
         </div>
       </div>
