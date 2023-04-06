@@ -265,7 +265,7 @@ export default function ManagerMain() {
                         }}
                         className="bg-red-500 hover:bg-red-700 font-bold py-2 px-4 rounded"
                       >
-                        <MdDelete />
+                        <MdDelete style={{color: 'FireBrick'}} />
                       </button>
                       </td>
                     </tr>

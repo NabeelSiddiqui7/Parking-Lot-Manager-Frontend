@@ -47,7 +47,7 @@ function NewModal(props: {isOpen:boolean, handleOpen: () => void, handleClose: (
           aria-describedby="modal-modal-description"
         >
             <Box sx={style}>
-              <h2 className='mb-2'>Book Spot: X</h2>
+              <h2 className='mb-2'>Add Manager</h2>
               <form id='createTicket' onSubmit={onSubmitForm}>
                       <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Full Name</label>
                       <input type="text" id="first_name" className="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required/>
@@ -67,7 +67,14 @@ function NewModal(props: {isOpen:boolean, handleOpen: () => void, handleClose: (
 
 export default function ManagerListMain() {
   const [managerList, setManagerList] = useState<any[]>(["empty"]);
+  const [username, setUsername] = useState<any>("");
   const [open, setOpen] = useState(false);
+  const [openConfirm, setOpenConfirm] = React.useState(false);
+  const handleOpenConfirm = (username:any) => {
+    setOpenConfirm(true)
+    setUsername(username);
+  };
+  const handleCloseConfirm = () => setOpenConfirm(false);
 
 
    function toTitleCase(title: string) {
@@ -80,6 +87,20 @@ export default function ManagerListMain() {
       return ""
     }
   }
+
+  const style = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '300px',
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    borderRadius: 3,
+    p: 4,
+    margin: 'auto'
+  };
 
   const getResult = async () => {
     let url = `http://localhost:5000/manager/managers`;
@@ -98,9 +119,10 @@ export default function ManagerListMain() {
   const deleteManager = (username:string) => {
     let url = `http://localhost:5000/manager/managers`;
     // const res =  axios.delete(url);
-    const res =  axios.delete(url, { data: {userName: username}});
-  
-    getResult()
+    const res =  axios.delete(url, { data: {userName: username}}).then(()=>{
+      handleCloseConfirm();
+      getResult();
+    });
   }
 
   const handleOpen = () => {
@@ -142,12 +164,27 @@ export default function ManagerListMain() {
                     <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
                       {/* <td className="px-4 py-4">{result.name}</td> */}
                       <td className="px-2 py-4">
-                        <div className="pl-6 flex">
+                        <div className="pl-6 flex justify-between pr-2">
                           {toTitleCase(result.name)} 
                           {/* <Link className="pl-12" to={`/ParkingLot/${result.id}`}><MdDelete/></Link></div> */}
-                          <button className="pl-12" onClick={()=>deleteManager(result.username)}>
-                            <MdDelete/>
+                          {/* <button className="pl-12" onClick={()=>deleteManager(result.username)}> */}
+                          <button className="pl-12" onClick={()=>handleOpenConfirm(result.username)}>
+                            <MdDelete style={{color: 'FireBrick'}}/>
                           </button>
+                          <Modal
+                          open={openConfirm}
+                          onClose={handleCloseConfirm}
+                          aria-labelledby="modal-modal-title"
+                          aria-describedby="modal-modal-description"
+                          >
+                            <Box sx={style}>
+                              <h2 className='mb-6 text-center'>Are You Sure You Want To Delete <span className="text-blue-700 font-bold">{username}</span></h2>           
+                              <div className="flex justify-between px-8">
+                                <button className="bg-red my-2 p-2 rounded-md" onClick={()=>deleteManager(username)} type="submit" form="createTicket" value="Submit">Delete</button>
+                                <button className="bg-gray-400 my-2 p-2 rounded-md" onClick={handleCloseConfirm} type="submit" form="createTicket" value="Submit">Cancel</button>
+                              </div>
+                            </Box>
+                          </Modal>
                         </div>
                       </td>
                     </tr>
