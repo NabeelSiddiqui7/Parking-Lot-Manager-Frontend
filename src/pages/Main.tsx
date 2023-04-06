@@ -20,15 +20,20 @@ export default function Customer() {
     { display: "Location, Desc.", field: "location", order: "desc" },
   ];
 
-  const [filter, setFilter] = useState<number>(0);
   const [sort, setSort] = useState<any>(sortItems[0]);
+  const [filter, setFilter] = useState<number>(0);
+  const [occupancyFilter, setOccupancyFilter] = useState<string>('any');
+
+  
+  
 
 
 
   const getResult = async () => {
-    let url = `http://localhost:5000/user/lots?sortField=${sort.field}&order=${sort.order}`;
+    let url = `http://localhost:5000/user/lots`;
     const res = await axios.get(url);
     const data = res.data;
+    console.log(data)
     setOriginalResults(data);
     setResults(data);
     // if(search.length > 0){
@@ -44,19 +49,35 @@ export default function Customer() {
 
   useEffect(() => {
     getResult();
-   },[sort,search]);
+   },[search]);
 
-  useEffect(() => {
-    if (filter === 5) {
-      setResults(originalResults.filter((item) => item.rate < 5.0));
-    } else if (filter === 10) {
-      setResults(originalResults.filter((item) => item.rate < 10.0));
-    } else if (filter === 20) {
-      setResults(originalResults.filter((item) => item.rate < 20.0));
-    } else if (filter === 10000000) {
-      setResults(originalResults);
+   useEffect(() => {
+    let filteredData = [...originalResults];
+    
+    if (occupancyFilter === "empty") {
+      filteredData = filteredData.filter((item) => item.count > 0);
+    } else if (occupancyFilter !== "any") {
+      filteredData = filteredData.filter((item) => item.count >= 1);
     }
-  }, [filter, originalResults]);
+
+    if (filter === 5) {
+      filteredData = filteredData.filter((item) => item.rate < 5.0);
+    } else if (filter === 10) {
+      filteredData = filteredData.filter((item) => item.rate < 10.0);
+    } else if (filter === 20) {
+      filteredData = filteredData.filter((item) => item.rate < 20.0);
+    }
+    
+    filteredData.sort((a, b) => {
+      if (sort.order === "asc") {
+        return a[sort.field].localeCompare(b[sort.field]);
+      } else {
+        return b[sort.field].localeCompare(a[sort.field]);
+      }
+    });
+    setResults(filteredData);
+  }, [occupancyFilter, filter, originalResults, sort]);
+
 
   useEffect(() => {
     if (search.length > 0) {
@@ -135,6 +156,28 @@ export default function Customer() {
                 ]}
                 isSearchable={false}
               />
+              
+              <p className="mx-5 text-white">Occupency:</p>
+              <Select
+              className="text-base text-black"
+              onChange={(e) => {
+                if (e) {
+                  setOccupancyFilter(e.value);
+                } else {
+                  setOccupancyFilter('');
+                }
+              }}
+              defaultValue={{
+                value: 'any',
+                label: "Select",
+                }}
+                options={[
+                {value: 'any', label: "Any"},  
+                {value: 'empty', label: "Lots that are not full" },
+            
+                ]}
+                isSearchable={false}
+              />
           </div>
           
           
@@ -148,7 +191,7 @@ export default function Customer() {
                   <th scope="col" className="px-6 py-7">Name</th>
                   <th scope="col" className="px-6 py-7">Location</th>
                   <th scope="col" className="px-6 py-7">Rate</th>
-                  <th scope="col" className="px-6 py-7 w-44">Occupancy</th>
+                  <th scope="col" className="px-6 py-7 w-44">Available Spots</th>
                 </tr>
               </thead>
                 {results.map((result:any) => {
