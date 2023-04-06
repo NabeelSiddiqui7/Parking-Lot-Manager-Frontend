@@ -106,7 +106,7 @@ export default function TicketModal(props:any) {
         console.log(data);
         if(data[0].booked == true){
           setStatus("Booked");
-          setColour("bg-blue-400");
+          setColour("bg-blue-400 border-solid border-4 border-cyan-100");
         }
       }
     });
@@ -190,7 +190,7 @@ export default function TicketModal(props:any) {
                     <SelectLabels hours={bookTicketHours} minutes={bookTicketMinutes} setHours={setHours} setMinutes={setMinutes}/>
                     <h2 className='my-4'>Total: ${getRate(bookTicketHours, bookTicketMinutes)}</h2>
             </form>            
-            <button className="bg-blue-400 my-2 p-2 rounded-md" type="submit" form="createTicket" value="Submit">Submit</button>
+            <button className="bg-blue-400 my-2 text-white p-2 rounded-md" type="submit" form="createTicket" value="Submit">Submit</button>
           </Box>
         )
         : status == "Booked"? 
