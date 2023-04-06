@@ -35,7 +35,7 @@ export default function ManagerMain() {
   const [sort, setSort] = useState<any>(sortItems[0]);
 
   const getResult = async () => {
-    let url = `http://localhost:5000/user/lots?sortField=${sort.field}&order=${sort.order}`;
+    let url = `http://localhost:5000/user/lots`;
     const res = await axios.get(url);
     const data = res.data.filter((obj: { managerusername: any }) => {
       return obj.managerusername == userName;
@@ -45,18 +45,28 @@ export default function ManagerMain() {
     setResults(data);
   }
 
-
   useEffect(() => {
+    getResult();
+   },[search]);
+
+   useEffect(() => {
+    let sortedResults = [...originalResults];
     if (filter === 5) {
-      setResults(originalResults.filter((item) => item.rate < 5.0));
+      sortedResults = sortedResults.filter((item) => item.rate < 5.0);
     } else if (filter === 10) {
-      setResults(originalResults.filter((item) => item.rate < 10.0));
+      sortedResults = sortedResults.filter((item) => item.rate < 10.0);
     } else if (filter === 20) {
-      setResults(originalResults.filter((item) => item.rate < 20.0));
-    } else if (filter === 10000000) {
-      setResults(originalResults);
+      sortedResults = sortedResults.filter((item) => item.rate < 20.0);
     }
-  }, [filter, originalResults]);
+    sortedResults.sort((a, b) => {
+      if (sort.order === "asc") {
+        return a[sort.field] < b[sort.field] ? -1 : 1;
+      } else {
+        return a[sort.field] > b[sort.field] ? -1 : 1;
+      }
+    });
+    setResults(sortedResults);
+  }, [filter, originalResults, sort]);
 
   useEffect(() => {
     if (search.length > 0) {
@@ -73,10 +83,6 @@ export default function ManagerMain() {
       setResults(originalResults);
     }
   }, [search, originalResults]);
-
-  useEffect(() => {
-    getResult();
-   },[sort,search]);
 
    const callback = (e:any) => {
     setSearch(e.target.value);
