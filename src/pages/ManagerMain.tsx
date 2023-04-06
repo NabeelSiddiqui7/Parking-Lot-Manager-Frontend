@@ -118,7 +118,6 @@ export default function ManagerMain() {
 
   //Delete lot
   const deleteData = async (lotid: any) => {
-    console.log(lotid);
     let url = `http://localhost:5000/manager/lots/${lotid}`;
     const res = await axios.delete(url).then(()=>{
       handleCloseConfirm();
@@ -152,10 +151,8 @@ export default function ManagerMain() {
 
   const putData = async () => {
     let url = `http://localhost:5000/manager/lots`;
-    console.log(formData);
     const res = await axios.post(url, formData);
     const data = res.data;
-    console.log(res);
     getResult();
   }
 
@@ -271,7 +268,7 @@ export default function ManagerMain() {
                       <td className="px-1 py-4">
                       <button
                         onClick={()=>handleOpenConfirm(result.name)}
-                        className="bg-red-500 hover:bg-red-700 font-bold py-2 px-4 rounded"
+                        className="hover:bg-red-700 font-bold py-2 px-4 rounded"
                       >
                         <MdDelete style={{color: 'FireBrick'}} />
                       </button>
@@ -284,7 +281,7 @@ export default function ManagerMain() {
                             <Box sx={style}>
                               <h2 className='mb-6 text-center text-gray-600'>Are you sure you want to delete lot: <span className="text-blue-700 font-bold">{lotname}</span>?</h2>           
                               <div className="flex justify-between px-6">
-                                <button className="bg-red my-2 p-2 rounded-sm text-white px-4" onClick={()=>handleDelete(result.id)} type="submit" form="createTicket" value="Submit">Delete</button>
+                                <button className="bg-red-600 my-2 p-2 rounded-sm text-white px-4" onClick={()=>handleDelete(result.id)} type="submit" form="createTicket" value="Submit">Delete</button>
                                 <button className="bg-gray-400 my-2 p-2 rounded-sm text-white px-4" onClick={handleCloseConfirm} type="submit" form="createTicket" value="Submit">Cancel</button>
                               </div>
                             </Box>

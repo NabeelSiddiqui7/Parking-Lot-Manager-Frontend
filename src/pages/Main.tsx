@@ -33,18 +33,8 @@ export default function Customer() {
     let url = `http://localhost:5000/user/lots`;
     const res = await axios.get(url);
     const data = res.data;
-    console.log(data)
     setOriginalResults(data);
     setResults(data);
-    // if(search.length > 0){
-    //   const filtered = data.filter((obj: { name: any, location:any }) => {
-    //     return obj.name.startsWith(search) || obj.location.startsWith(search);
-    //   });
-    //   setResults(filtered);
-    // }
-    // else{
-    //   setResults(data);
-    // }
   }
 
   useEffect(() => {
@@ -172,7 +162,7 @@ export default function Customer() {
                 }}
                 options={[
                 {value: 'any', label: "Any"},  
-                {value: 'empty', label: "Lots that are not full" },
+                {value: 'empty', label: "Not Full" },
             
                 ]}
                 isSearchable={false}
@@ -200,7 +190,7 @@ export default function Customer() {
                       <td className="px-6 py-4">{result.name}</td>
                       <td className="px-8 py-4">{result.location}</td>
                       <td className="px-8 py-4">${result.rate}</td>
-                      <td className="px-8 py-4"><div className="flex"> {result.count} <Link className="pl-12" to={`/ParkingLot/${result.id}`} state={{length: result.length, width: result.width, name: result.name}}><SlArrowRight/></Link></div></td>
+                      <td className="px-8 py-4"><div className="flex justify-between pr-2"> {result.count} <Link className="pl-12" to={`/ParkingLot/${result.id}`} state={{length: result.length, width: result.width, name: result.name}}><SlArrowRight/></Link></div></td>
                     </tr>
                   </tbody>                
                 })}
@@ -233,52 +223,6 @@ export default function Customer() {
           </div>
   
           <div className="m-auto w-2/3 relative overflow-x-auto shadow-md sm:rounded-lg">
-            {/* <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                  <th scope="col" className="px-6 py-7">Name</th>
-                  <th scope="col" className="px-6 py-7">Location</th>
-                  <th scope="col" className="px-6 py-7">Rate</th>
-                  <th scope="col" className="px-6 py-7 w-44">Occupancy</th>
-                </tr>
-              </thead>
-              <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-                <td className="px-4 py-4">Lorem Ipsum</td>
-                <td className="px-2 py-4">Lorem Ipsum</td>
-                <td className="px-2 py-4">Lorem Ipsum</td>
-                <td className="px-2 py-4"><div className="flex">Lorem Ipsum <Link className="pl-12" to="/ParkingLot"><SlArrowRight/></Link></div></td>
-              </tr>
-              <tr className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-                <td className="px-4 py-4">Lorem Ipsum</td>
-                <td className="px-2 py-4">Lorem Ipsum</td>
-                <td className="px-2 py-4">Lorem Ipsum</td>
-                <td className="px-2 py-4"><div className="flex">Lorem Ipsum <Link className="pl-12" to="/ParkingLot"><SlArrowRight/></Link></div></td>
-              </tr>
-              <tr className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-                <td className="px-4 py-4">Lorem Ipsum</td>
-                <td className="px-2 py-4">Lorem Ipsum</td>
-                <td className="px-2 py-4">Lorem Ipsum</td>
-                <td className="px-2 py-4"><div className="flex">Lorem Ipsum <Link className="pl-12" to="/ParkingLot"><SlArrowRight/></Link></div></td>
-              </tr>
-              <tr className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-                <td className="px-4 py-4">Lorem Ipsum</td>
-                <td className="px-2 py-4">Lorem Ipsum</td>
-                <td className="px-2 py-4">Lorem Ipsum</td>
-                <td className="px-2 py-4"><div className="flex">Lorem Ipsum <Link className="pl-12" to="/ParkingLot"><SlArrowRight/></Link></div></td>
-              </tr>
-              <tr className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-                <td className="px-4 py-4">Lorem Ipsum</td>
-                <td className="px-2 py-4">Lorem Ipsum</td>
-                <td className="px-2 py-4">Lorem Ipsum</td>
-                <td className="px-2 py-4"><div className="flex">Lorem Ipsum <Link className="pl-12" to="/ParkingLot"><SlArrowRight/></Link></div></td>
-              </tr>
-              <tr className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-                <td className="px-4 py-4">Lorem Ipsum</td>
-                <td className="px-2 py-4">Lorem Ipsum</td>
-                <td className="px-2 py-4">Lorem Ipsum</td>
-                <td className="px-2 py-4"><div className="flex">Lorem Ipsum <Link className="pl-12" to="/ParkingLot"><SlArrowRight/></Link></div></td>
-              </tr>
-            </table> */}
           </div>
         </div>
       </div>
