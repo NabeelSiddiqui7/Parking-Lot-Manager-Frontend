@@ -177,7 +177,7 @@ export default function ManagerMain() {
             </div>
             <div className="text-xl text-center text-[#EFEFEF] pt-6 px-4 flex flex-col items-center justify-center flex-wrap">
               <p>Total Revenue: ${totalRevenue}</p>
-              <p>Total Occupancy: {totalOccupancy}</p>
+              <p>Total Availability: {totalOccupancy}</p>
               <p>Average Rate: ${averageRate.toFixed(2)}</p>
             </div>
         </div>
@@ -237,7 +237,7 @@ export default function ManagerMain() {
                   <th scope="col" className="px-6 py-7">Name</th>
                   <th scope="col" className="px-4 py-7">Location</th>
                   <th scope="col" className="px-4 py-7">Rate</th>
-                  <th scope="col" className="px-4 py-7">Occupancy</th>
+                  <th scope="col" className="px-4 py-7">Available Spots</th>
                   <th scope="col" className="px-4 py-7">Revenue</th>
                   <th scope="col" className="px-4 py-7"></th>
                 </tr>
@@ -248,7 +248,7 @@ export default function ManagerMain() {
                       <td className="px-6 py-4">{result.name}</td>
                       <td className="px-8 py-4">{result.location}</td>
                       <td className="px-8 py-4">${result.rate}</td>
-                      <td className="px-8 py-4">{result.count}</td>
+                      <td className="px-14 py-4">{result.count}</td>
                       <td className="px-8 py-4">${result.revenue}</td>
                       <td className="px-1 py-4">
                       <button
