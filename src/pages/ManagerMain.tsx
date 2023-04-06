@@ -19,6 +19,7 @@ export default function ManagerMain() {
   const { isLoggedIn, userName } = useContext(AuthContext);
   const [results, setResults] = useState<any[]>(["empty"]);
   const [search, setSearch] = useState<any>("");
+  const [originalResults, setOriginalResults] = useState<any[]>([]);
   const [totalRevenue, setTotalRevenue] = useState<number>(0);
   const [totalOccupancy, setTotalOccupancy] = useState<number>(0);
   const [averageRate, setAverageRate] = useState<number>(0);
@@ -39,36 +40,43 @@ export default function ManagerMain() {
     const data = res.data.filter((obj: { managerusername: any }) => {
       return obj.managerusername == userName;
     });
-    
-    if(search.length > 0){
-      const filtered = data.filter((obj: { name: any, location:any }) => {
-        return obj.name.startsWith(search) || obj.location.startsWith(search);
-      });
-      setResults(filtered);
-    }
-    else{
-      setResults(data);
-    }
+
+    setOriginalResults(data);
+    setResults(data);
   }
 
 
-   useEffect(() => {
+  useEffect(() => {
     if (filter === 5) {
-      setResults(results.filter((item) => item.rate < 5.0));
+      setResults(originalResults.filter((item) => item.rate < 5.0));
     } else if (filter === 10) {
-      setResults(results.filter((item) => item.rate < 10.0));
+      setResults(originalResults.filter((item) => item.rate < 10.0));
     } else if (filter === 20) {
-      setResults(results.filter((item) => item.rate < 20.0));
-    } else if (filter === 20) {
-      setResults(results.filter((item) => item.rate < 10000000.0));
-    } else {
-      setResults(results);
+      setResults(originalResults.filter((item) => item.rate < 20.0));
+    } else if (filter === 10000000) {
+      setResults(originalResults);
     }
-  }, [filter, results]);
+  }, [filter, originalResults]);
+
+  useEffect(() => {
+    if (search.length > 0) {
+      const filtered = originalResults.filter(
+        (obj: { name: any; location: any }) => {
+          return (
+            obj.name.toLowerCase().startsWith(search.toLowerCase()) ||
+            obj.location.toLowerCase().startsWith(search.toLowerCase())
+          );
+        }
+      );
+      setResults(filtered);
+    } else {
+      setResults(originalResults);
+    }
+  }, [search, originalResults]);
 
   useEffect(() => {
     getResult();
-   },[sort,search, results]);
+   },[sort,search]);
 
    const callback = (e:any) => {
     setSearch(e.target.value);
@@ -100,6 +108,7 @@ export default function ManagerMain() {
     console.log(lotid);
     let url = `http://localhost:5000/manager/lots/${lotid}`;
     const res = await axios.delete(url);
+    getResult();
   }
 
   function handleDelete(lotid:any) {
@@ -132,6 +141,7 @@ export default function ManagerMain() {
     const res = await axios.post(url, formData);
     const data = res.data;
     console.log(res);
+    getResult();
   }
 
   const style = {
