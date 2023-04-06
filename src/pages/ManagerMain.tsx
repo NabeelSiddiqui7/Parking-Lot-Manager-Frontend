@@ -11,6 +11,7 @@ import Box from '@mui/material/Box';
 import { number } from "yargs";
 import axios from "axios";
 import AuthContext from "../helper/AuthContext";
+import {MdDelete} from "react-icons/md"
 
 export default function ManagerMain() {
 
@@ -63,11 +64,11 @@ export default function ManagerMain() {
     } else {
       setResults(results);
     }
-  }, [filter]);
+  }, [filter, results]);
 
   useEffect(() => {
     getResult();
-   },[sort,search]);
+   },[sort,search, results]);
 
    const callback = (e:any) => {
     setSearch(e.target.value);
@@ -91,6 +92,18 @@ export default function ManagerMain() {
     setTotalRevenue(totalRevenue);
     setTotalOccupancy(totalOccupancy);
     setAverageRate(averageRate);
+  }
+  //
+
+  //Delete lot
+  const deleteData = async (lotid: any) => {
+    console.log(lotid);
+    let url = `http://localhost:5000/manager/lots/${lotid}`;
+    const res = await axios.delete(url);
+  }
+
+  function handleDelete(lotid:any) {
+    deleteData(lotid);
   }
   //
   
@@ -215,7 +228,8 @@ export default function ManagerMain() {
                   <th scope="col" className="px-4 py-7">Location</th>
                   <th scope="col" className="px-4 py-7">Rate</th>
                   <th scope="col" className="px-4 py-7">Occupancy</th>
-                  <th scope="col" className="px-4 py-7 w-44">Revenue</th>
+                  <th scope="col" className="px-4 py-7">Revenue</th>
+                  <th scope="col" className="px-4 py-7"></th>
                 </tr>
               </thead>
                 {results.map((result:any) => {
@@ -226,11 +240,23 @@ export default function ManagerMain() {
                       <td className="px-8 py-4">${result.rate}</td>
                       <td className="px-8 py-4">{result.count}</td>
                       <td className="px-8 py-4">${result.revenue}</td>
+                      <td className="px-1 py-4">
+                      <button
+                        onClick={() => {
+                          if (window.confirm("Are you sure you want to delete this lot from the database?")) {
+                            handleDelete(result.id);
+                          }
+                        }}
+                        className="bg-red-500 hover:bg-red-700 font-bold py-2 px-4 rounded"
+                      >
+                        <MdDelete />
+                      </button>
+                      </td>
                     </tr>
                   </tbody>                
                 })}
             </table>
-            <button className="mt-3 w-full text-white bg-blue-500 py-1" onClick={handleOpen}>
+            <button className="mt-3 w-full text-white bg-blue-400 py-1" onClick={handleOpen}>
               <div className="flex justify-center items-center">
                 Add Lot
                 <AiOutlinePlusCircle size={"1.25rem"} className="m-2"/>
