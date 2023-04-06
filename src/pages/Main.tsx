@@ -10,6 +10,7 @@ import axios from "axios";
 export default function Customer() {
   const [results, setResults] = useState<any[]>(["empty"]);
   const [search, setSearch] = useState<any>("");
+  const [originalResults, setOriginalResults] = useState<any[]>([]);
   
 
   const sortItems = [
@@ -28,35 +29,52 @@ export default function Customer() {
     let url = `http://localhost:5000/user/lots?sortField=${sort.field}&order=${sort.order}`;
     const res = await axios.get(url);
     const data = res.data;
-    if(search.length > 0){
-      const filtered = data.filter((obj: { name: any, location:any }) => {
-        return obj.name.startsWith(search) || obj.location.startsWith(search);
-      });
-      setResults(filtered);
-    }
-    else{
-      setResults(data);
-    }
+    setOriginalResults(data);
+    setResults(data);
+    // if(search.length > 0){
+    //   const filtered = data.filter((obj: { name: any, location:any }) => {
+    //     return obj.name.startsWith(search) || obj.location.startsWith(search);
+    //   });
+    //   setResults(filtered);
+    // }
+    // else{
+    //   setResults(data);
+    // }
   }
-
-
-   useEffect(() => {
-    if (filter === 5) {
-      setResults(results.filter((item) => item.rate < 5.0));
-    } else if (filter === 10) {
-      setResults(results.filter((item) => item.rate < 10.0));
-    } else if (filter === 20) {
-      setResults(results.filter((item) => item.rate < 20.0));
-    } else if (filter === 20) {
-      setResults(results.filter((item) => item.rate < 10000000.0));
-    } else {
-      setResults(results);
-    }
-  }, [filter]);
 
   useEffect(() => {
     getResult();
    },[sort,search]);
+
+  useEffect(() => {
+    if (filter === 5) {
+      setResults(originalResults.filter((item) => item.rate < 5.0));
+    } else if (filter === 10) {
+      setResults(originalResults.filter((item) => item.rate < 10.0));
+    } else if (filter === 20) {
+      setResults(originalResults.filter((item) => item.rate < 20.0));
+    } else if (filter === 10000000) {
+      setResults(originalResults);
+    }
+  }, [filter, originalResults]);
+
+  useEffect(() => {
+    if (search.length > 0) {
+      const filtered = originalResults.filter(
+        (obj: { name: any; location: any }) => {
+          return (
+            obj.name.toLowerCase().startsWith(search.toLowerCase()) ||
+            obj.location.toLowerCase().startsWith(search.toLowerCase())
+          );
+        }
+      );
+      setResults(filtered);
+    } else {
+      setResults(originalResults);
+    }
+  }, [search, originalResults]);
+
+
 
    const callback = (e:any) => {
     setSearch(e.target.value);
