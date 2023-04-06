@@ -14,6 +14,7 @@ import AuthContext from "../helper/AuthContext";
 
 export default function ManagerMain() {
 
+  //All list functionality
   const { isLoggedIn, userName } = useContext(AuthContext);
   const [results, setResults] = useState<any[]>(["empty"]);
   const [search, setSearch] = useState<any>("");
@@ -91,7 +92,10 @@ export default function ManagerMain() {
     setTotalOccupancy(totalOccupancy);
     setAverageRate(averageRate);
   }
-    const [open, setOpen] = React.useState(false);
+  //
+  
+  //Add lot functionality
+  const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -101,7 +105,8 @@ export default function ManagerMain() {
     rows: 0,
     location: '',
     rate: 0,
-    overtime: 0
+    overtime: 0,
+    manager: userName
   }) 
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -110,7 +115,8 @@ export default function ManagerMain() {
 
   const putData = async () => {
     let url = `http://localhost:5000/manager/lots`;
-    const res = await axios.post(url);
+    console.log(formData);
+    const res = await axios.post(url, formData);
     const data = res.data;
     console.log(res);
   }
@@ -132,7 +138,9 @@ export default function ManagerMain() {
   function handleSubmit(e:any) {
     e.preventDefault();
     putData();
+    handleClose();
   }
+  //
 
   return (
     <div className="h-screen w-100vw" style={{ backgroundImage: `url(${bgImg})` }}>
@@ -147,7 +155,7 @@ export default function ManagerMain() {
             <div className="text-xl text-center text-[#EFEFEF] pt-6 px-4 flex flex-col items-center justify-center flex-wrap">
               <p>Total Revenue: ${totalRevenue}</p>
               <p>Total Occupancy: {totalOccupancy}</p>
-              <p>Average Rate: ${averageRate}</p>
+              <p>Average Rate: ${averageRate.toFixed(2)}</p>
             </div>
         </div>
         <div className="flex justify-center text-4xl md:text-5xl font-bold text-[#EFEFEF] pt-6 md:pt-12">
@@ -222,33 +230,39 @@ export default function ManagerMain() {
                   </tbody>                
                 })}
             </table>
+            <button className="mt-3 w-full text-white bg-blue-500 py-1" onClick={handleOpen}>
+              <div className="flex justify-center items-center">
+                Add Lot
+                <AiOutlinePlusCircle size={"1.25rem"} className="m-2"/>
+              </div>
+            </button>
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <h2 className='mb-2'>Create Lot</h2>
+                  <form id='createTicket' onSubmit={handleSubmit}>
+                      <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Lot Name</label>
+                      <input type="text" name="full_name" onChange={handleInput} className="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required/>
+                      <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Columns</label>
+                      <input type="number" min="0" name="columns" onChange={handleInput} className="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required/>
+                      <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rows</label>
+                      <input type="number" min="0" name="rows" onChange={handleInput} className="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required/>
+                      <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Location</label>
+                      <input type="text" name="location" onChange={handleInput} className="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required/>
+                      <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rate</label>
+                      <input type="number" min="0" name="rate" onChange={handleInput} className="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required/>
+                      <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Overtime Rate</label>
+                      <input type="number" min="0" name="overtime" onChange={handleInput} className="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required/>
+                  </form>            
+                <button className="bg-blue-400 my-2 p-2 rounded-md" type="submit" form="createTicket" value="Submit">Submit</button>
+              </Box>
+            </Modal>
           </div>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <h2 className='mb-2'>Create Lot</h2>
-            <form id='createTicket' onSubmit={handleSubmit}>
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Lot Name</label>
-                <input type="text" name="full_name" onChange={handleInput} className="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required/>
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Columns</label>
-                <input type="number" min="0" name="columns" onChange={handleInput} className="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required/>
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rows</label>
-                <input type="number" min="0" name="rows" onChange={handleInput} className="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required/>
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Location</label>
-                <input type="text" name="location" onChange={handleInput} className="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required/>
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rate</label>
-                <input type="number" min="0" name="rate" onChange={handleInput} className="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required/>
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Overtime Rate</label>
-                <input type="number" min="0" name="overtime" onChange={handleInput} className="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required/>
-            </form>            
-          <button className="bg-blue-400 my-2 p-2 rounded-md" type="submit" form="createTicket" value="Submit">Submit</button>
-        </Box>
-      </Modal>
-      </div>
+        </div>
       </div>
   );
 }
