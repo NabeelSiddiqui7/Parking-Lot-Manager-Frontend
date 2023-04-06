@@ -38,7 +38,7 @@ export function ParkingLotGrid(props: any) {
                 <p className="text-white mt-2">Taken</p>
             </div>
             <div className="flex flex-col mx-4">
-                <div className={`h-6 w-6 m-auto bg-blue-400 border-solid border-2 border-cyan-200`}></div>
+                <div className={`h-6 w-6 m-auto bg-blue-400 border-solid border-2 border-cyan-100`}></div>
                 <p className="text-white mt-2">Booked</p>
             </div>
         </div>

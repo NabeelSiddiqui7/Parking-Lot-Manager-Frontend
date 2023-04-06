@@ -97,7 +97,7 @@ export default function Customer() {
   
         <HeaderMain />
   
-        <div className="backdrop-blur-main">
+        <div className="backdrop-blur-main h-full">
           <div className="flex justify-center text-4xl md:text-5xl font-bold text-[#EFEFEF] pt-10 md:pt-16 mb-4">
                 Available Lots
           </div>
