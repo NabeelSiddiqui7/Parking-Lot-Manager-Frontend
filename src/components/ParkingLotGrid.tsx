@@ -12,7 +12,7 @@ export function ParkingLotGrid(props: any) {
     for (var i = 0; i < props.length; i++) {
         for(var j = 0; j < props.width; j++){
             if(props.results.spaces){
-                indents.push(<TicketModal id={props.results.spaces[key].id} key={key} status={props.booked.includes(props.results.spaces[key].id)?"Taken":"Open"}/>);
+                indents.push(<TicketModal rate={props.rate} id={props.results.spaces[key].id} key={key} status={props.booked.includes(props.results.spaces[key].id)?"Taken":"Open"}/>);
             }
             key ++;
         }

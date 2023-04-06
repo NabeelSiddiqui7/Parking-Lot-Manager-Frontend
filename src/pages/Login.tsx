@@ -49,7 +49,6 @@ function LoginForm() {
         setErrorMessage("Invalid username or password");
       }
     } catch (error) {
-      console.error(error);
       setErrorMessage("An error occurred during authentication");
     }
   };

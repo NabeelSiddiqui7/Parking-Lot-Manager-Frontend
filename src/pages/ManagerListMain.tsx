@@ -85,12 +85,16 @@ export default function ManagerListMain() {
   const [search, setSearch] = useState<any>("");
   const [username, setUsername] = useState<any>("");
   const [open, setOpen] = useState(false);
+  const [failedDelete, setFailedDelete] = useState(false);
   const [openConfirm, setOpenConfirm] = React.useState(false);
   const handleOpenConfirm = (username:any) => {
     setOpenConfirm(true)
     setUsername(username);
   };
-  const handleCloseConfirm = () => setOpenConfirm(false);
+  const handleCloseConfirm = () => {
+    setOpenConfirm(false);
+    setFailedDelete(false);
+  }
 
 
    function toTitleCase(title: string) {
@@ -154,9 +158,13 @@ export default function ManagerListMain() {
       baseURL: 'http://localhost:5000'
     });
 
-    const res =  axiosInstance.delete("/manager/managers", { data: {userName: username}}).then(()=>{
+    const res =  axiosInstance.delete("/manager/managers", { data: {userName: username}}).then((response)=>{
       handleCloseConfirm();
       getResult();
+    }).catch(err =>{
+      if(err.response.data.message == "Failed to delete manager"){
+        setFailedDelete(true);
+      }
     });
   }
 
@@ -166,6 +174,7 @@ export default function ManagerListMain() {
 
   const handleClose = () => {
     setOpen(false);
+    setFailedDelete(false);
   }
   
   const callback = (e:any) => {
@@ -222,9 +231,12 @@ export default function ManagerListMain() {
                             aria-describedby="modal-modal-description"
                           >
                             <Box sx={style}>
-                              <h2 className='mb-6 text-center text-gray-600'>Are you sure you want to delete manager: <span className="text-blue-700 font-bold">{username}</span>?</h2>           
+                              <h2 className='mb-6 text-center text-gray-600'>Are you sure you want to delete manager: <span className="text-blue-700 font-bold">{username}</span>?</h2>
+                              {
+                                failedDelete && <div className="mb-6 text-center text-red-700 font-bold">Cannot delete managers with parking lots!</div>
+                              }           
                               <div className="flex justify-between px-6">
-                                <button className="bg-red my-2 p-2 rounded-sm text-white px-4" onClick={()=>handleDelete(username)} type="submit" form="createTicket" value="Submit">Delete</button>
+                                <button className="bg-red-600 my-2 p-2 rounded-sm text-white px-4" onClick={()=>handleDelete(username)} type="submit" form="createTicket" value="Submit">Delete</button>
                                 <button className="bg-gray-400 my-2 p-2 rounded-sm text-white px-4" onClick={handleCloseConfirm} type="submit" form="createTicket" value="Submit">Cancel</button>
                               </div>
                             </Box>
