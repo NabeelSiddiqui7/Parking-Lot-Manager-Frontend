@@ -48,8 +48,8 @@ export default function TicketModal(props:any) {
 
   return (
     <>
-      <button id={props.id} onClick={handleOpen} style={{width: '96px', height: '96px'}}>
-        <div className={`h-16 m-autop ${colour} sm:h-24`}></div>
+      <button id={props.id} onClick={handleOpen} style={{width: '64px', height: '64px'}}>
+        <div className={`h-16 ${colour} sm:h-16`}></div>
       </button>
       <Modal
         open={open}

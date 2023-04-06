@@ -24,8 +24,22 @@ export function ParkingLotGrid(props: any) {
 
     return (
        <>
-        <div className={`flex flex-row justify-between flex-wrap mx-auto my-12`} style={{gap:'15px', width:`${96 * width + 15 * width}px`}}>
+        <div className={`flex flex-row justify-between flex-wrap mx-auto my-12`} style={{gap:'15px', width:`${64 * width + 15 * width}px`}}>
             {indents}
+        </div>
+        <div className={`flex flex-row justify-between flex-wrap mx-auto`}>
+            <div className="flex flex-col mx-4">
+                <div className={`h-6 w-6 m-auto bg-gray-50`}></div>
+                <p className="text-white mt-2">Available</p>
+            </div>
+            <div className="flex flex-col mx-4">
+                <div className={`h-6 w-6 m-auto bg-gray-400`}></div>
+                <p className="text-white mt-2">Taken</p>
+            </div>
+            <div className="flex flex-col mx-4">
+                <div className={`h-6 w-6 m-auto bg-blue-400 border-solid border-2 border-cyan-200`}></div>
+                <p className="text-white mt-2">Booked</p>
+            </div>
         </div>
        </>
     )

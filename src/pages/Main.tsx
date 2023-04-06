@@ -107,7 +107,7 @@ export default function Customer() {
   
         <HeaderMain />
   
-        <div className="backdrop-blur-main h-full">
+        <div className="backdrop-blur-main">
           <div className="flex justify-center text-4xl md:text-5xl font-bold text-[#EFEFEF] pt-10 md:pt-16 mb-4">
                 Available Lots
           </div>
@@ -223,7 +223,7 @@ export default function Customer() {
               Available Lots
         </div>
   
-        <div className="backdrop-blur-main h-full">
+        <div className="backdrop-blur-main">
           <div className="p-10 flex justify-center">
             <SearchBar placeholder="Find Lot" />
             <div className="flex flex-row items-center">
