@@ -30,7 +30,7 @@ export default function Customer() {
 
 
   const getResult = async () => {
-    let url = `http://localhost:3000/user/lots`;
+    let url = `http://localhost:5000/user/lots`;
     const res = await axios.get(url);
     const data = res.data;
     setOriginalResults(data);
