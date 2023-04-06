@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Select from "react-select";
 import { Link } from "react-router-dom";
 import bgImg from "../images/BgMain1.svg";
@@ -10,6 +10,7 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 import axios from "axios";
 import { Modal } from "@mui/material";
 import { Box } from "@mui/material";
+import AuthContext from "../helper/AuthContext";
 
   
 function AddManagerModal(props: {isOpen:boolean, handleOpen: () => void, handleClose: () => void, setManagerList: (value:any) => void}) {
@@ -80,12 +81,14 @@ function AddManagerModal(props: {isOpen:boolean, handleOpen: () => void, handleC
 
 
 export default function ManagerListMain() {
+  const { isLoggedIn, userName } = useContext(AuthContext);
   const [managerList, setManagerList] = useState<any[]>(["empty"]);
   const [originalResults, setOriginalResults] = useState<any[]>([]);
   const [search, setSearch] = useState<any>("");
   const [username, setUsername] = useState<any>("");
   const [open, setOpen] = useState(false);
   const [failedDelete, setFailedDelete] = useState(false);
+  const [failedDeleteReason, setDeleteReason] = useState<any>("");
   const [openConfirm, setOpenConfirm] = React.useState(false);
   const handleOpenConfirm = (username:any) => {
     setOpenConfirm(true)
@@ -94,6 +97,7 @@ export default function ManagerListMain() {
   const handleCloseConfirm = () => {
     setOpenConfirm(false);
     setFailedDelete(false);
+    setDeleteReason("");
   }
 
 
@@ -158,14 +162,21 @@ export default function ManagerListMain() {
       baseURL: 'http://localhost:5000'
     });
 
-    const res =  axiosInstance.delete("/manager/managers", { data: {userName: username}}).then((response)=>{
-      handleCloseConfirm();
-      getResult();
-    }).catch(err =>{
-      if(err.response.data.message == "Failed to delete manager"){
-        setFailedDelete(true);
-      }
-    });
+    if(username != userName){
+      const res =  axiosInstance.delete("/manager/managers", { data: {userName: username}}).then((response)=>{
+        handleCloseConfirm();
+        getResult();
+      }).catch(err =>{
+        if(err.response.data.message == "Failed to delete manager"){
+          setFailedDelete(true);
+          setDeleteReason("Cannot delete manager with assigned lots");
+        }
+      });
+    }
+    else{
+      setFailedDelete(true);
+      setDeleteReason("Cannot delete yourself");
+    }
   }
 
   const handleOpen = () => {
@@ -175,6 +186,7 @@ export default function ManagerListMain() {
   const handleClose = () => {
     setOpen(false);
     setFailedDelete(false);
+    setDeleteReason("");
   }
   
   const callback = (e:any) => {
@@ -233,7 +245,7 @@ export default function ManagerListMain() {
                             <Box sx={style}>
                               <h2 className='mb-6 text-center text-gray-600'>Are you sure you want to delete manager: <span className="text-blue-700 font-bold">{username}</span>?</h2>
                               {
-                                failedDelete && <div className="mb-6 text-center text-red-700 font-bold">Cannot delete managers with parking lots!</div>
+                                failedDelete && <div className="mb-6 text-center text-red-700 font-bold">{failedDeleteReason}</div>
                               }           
                               <div className="flex justify-between px-6">
                                 <button className="bg-red-600 my-2 p-2 rounded-sm text-white px-4" onClick={()=>handleDelete(username)} type="submit" form="createTicket" value="Submit">Delete</button>

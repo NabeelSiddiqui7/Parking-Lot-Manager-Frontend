@@ -291,7 +291,11 @@ export default function ManagerMain() {
                   </tbody>                
                 })}
               </table>
-              <button className="mt-3 w-full text-white bg-blue-400 py-1" onClick={handleOpen}>
+            </>
+            :
+            <div className="bg-white w-full text-md rounded-md opacity-25 text-black py-12 px-8 mx-auto text-center">No Results Found</div>
+          }
+          <button className="mt-3 w-full text-white bg-blue-400 py-1" onClick={handleOpen}>
                 <div className="flex justify-center items-center">
                   Add Lot
                   <AiOutlinePlusCircle size={"1.25rem"} className="m-2"/>
@@ -322,10 +326,6 @@ export default function ManagerMain() {
                   <button className="bg-blue-400 my-2 p-2 rounded-md" type="submit" form="createTicket" value="Submit">Submit</button>
                 </Box>
               </Modal>
-            </>
-            :
-            <div className="bg-white w-2/3 text-md rounded-md opacity-25 text-black py-12 px-8 mx-auto text-center">No Results Found</div>
-          }
           </div>
         </div>
       </div>
