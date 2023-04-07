@@ -85,6 +85,8 @@ export default function TicketModal(props:any) {
   const [extendMinutes, setExtendMinutes] = React.useState('0');
 
   const [ticketId, setTicketId] = React.useState(0);
+  const [time, setTime] = React.useState(" ");
+
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false); 
@@ -100,15 +102,16 @@ export default function TicketModal(props:any) {
     setFormData({...formData, [event.target.name]:event.target.value })
   }
 
+
   const getResult = async () => {
     let url = `http://localhost:5000/user/ticket`;
     const res = await axios.get(url, {params: {id: props.id }}).then((res)=>{
       const data = res.data;
-      setTicketId(data.id);
       if(data.length > 0){
-        console.log(data);
         if(data[0].booked == true){
+          setTicketId(data[0].id);
           setStatus("Booked");
+          setTime(data[0].expectedexpirydate)
           setColour("bg-blue-400 border-solid border-4 border-cyan-100");
         }
       }
@@ -128,7 +131,7 @@ export default function TicketModal(props:any) {
   },[status]);
 
   const createTicket = async () => {
-
+    
     const date = new Date(); 
     const isoString = date.toISOString(); 
     const dateString = isoString.replace("T", " ").replace("Z", ""); 
@@ -141,8 +144,14 @@ export default function TicketModal(props:any) {
       tempminutes = tempminutes % 60
     }
 
+
+
     let updatedHour = tempDate[1].split(":")[0]
         updatedHour = String(temphours)
+
+    if (updatedHour == '00' || updatedHour == '0'){
+      updatedHour = '12';
+    }
 
     let updatedMinutes = tempDate[1].split(":")[1]
         updatedMinutes = String(tempminutes)
@@ -161,12 +170,10 @@ export default function TicketModal(props:any) {
     });
     }
 
-    const extendTicket = async () => {
+    const extendTicket = async (dtime: String, ticketId: Number) => {
 
-      const date = new Date(); 
-      const isoString = date.toISOString(); 
-      const dateString = isoString.replace("T", " ").replace("Z", ""); 
   
+      let dateString = dtime.replace("T", " ").replace("Z", ""); 
       let tempDate = dateString.split(" ");
       let temphours = ((Number(tempDate[1].split(":")[0])%12)+Number(extendHours))%12;
       let tempminutes = ((Number(tempDate[1].split(":")[1])+Number(extendMinutes)));
@@ -177,7 +184,11 @@ export default function TicketModal(props:any) {
   
       let updatedHour = tempDate[1].split(":")[0]
           updatedHour = String(temphours)
-  
+
+      if (updatedHour == '00' || updatedHour == '0'){
+        updatedHour = '12';
+      }
+      
       let updatedMinutes = tempDate[1].split(":")[1]
           updatedMinutes = String(tempminutes)
   
@@ -187,7 +198,7 @@ export default function TicketModal(props:any) {
       // Sending the request
       let url = `http://localhost:5000/user/ticket`;
       const requestBody: URLSearchParams = new URLSearchParams();
-      requestBody.append("id", (props.id));
+      requestBody.append("id",ticketId.toString() );
       requestBody.append("time", updatedDateStamp);
   
       const response = await axios.put(url, requestBody).then(()=>{
@@ -234,10 +245,8 @@ export default function TicketModal(props:any) {
         (
           <Box sx={style}>
             <h2 className='mb-2'>Extend Spot: {props.id}</h2>
-            <form id='extendTicket' onSubmit={extendTicket}>
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name: </label>
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">License Plate: </label>
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Time</label>
+            <form id='extendTicket' onSubmit={()=>extendTicket(time, ticketId)}>
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Current Expiry Time: {time.replace("T", " ").replace("Z", "").split(" ")[1]}</label>
               {/* <input type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required/> */}
               <SelectLabels hours={extendHours} minutes={extendMinutes} setHours={setExtendHours} setMinutes={setExtendMinutes}/>
               <h2 className='my-4'>Total: ${getRate(extendHours, extendMinutes)}</h2>
